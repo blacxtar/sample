@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { PenTool, Search, BookOpen, Volume2, Menu, X } from "lucide-react";
+import { PenTool, Search, BookOpen, Volume2, Menu, X, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface ChatSession {
   id: string;
@@ -16,6 +17,44 @@ interface ChatSidebarProps {
   onNewChat: () => void;
   onSelectChat: (chatId: string) => void;
 }
+
+const UserProfile = () => {
+  const { user, signOut } = useAuth();
+
+  const getInitials = (email: string) => {
+    return email.slice(0, 2).toUpperCase();
+  };
+
+  const getUserName = (email: string) => {
+    return email.split('@')[0];
+  };
+
+  return (
+    <div className="p-4 border-t border-chat-border">
+      <div className="flex items-center space-x-3">
+        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+          <span className="text-sm font-medium text-primary-foreground">
+            {user?.email ? getInitials(user.email) : "U"}
+          </span>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-medium text-foreground truncate">
+            {user?.email ? getUserName(user.email) : "User"}
+          </div>
+          <div className="text-xs text-muted-foreground">Free</div>
+        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => signOut()}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          <LogOut className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
+};
 
 const ChatSidebar = ({ isOpen, onToggle, currentChatId, onNewChat, onSelectChat }: ChatSidebarProps) => {
   const [chatSessions] = useState<ChatSession[]>([
@@ -128,17 +167,7 @@ const ChatSidebar = ({ isOpen, onToggle, currentChatId, onNewChat, onSelectChat 
           </div>
 
           {/* User Profile */}
-          <div className="p-4 border-t border-chat-border">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-sm font-medium text-primary-foreground">SA</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-foreground truncate">Salman Ahmad</div>
-                <div className="text-xs text-muted-foreground">Free</div>
-              </div>
-            </div>
-          </div>
+          <UserProfile />
         </div>
       </div>
     </>
