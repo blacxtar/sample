@@ -42,10 +42,10 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
   return (
     <div className="flex flex-col mb-6 animate-fade-in-up">
       <div className="flex items-start space-x-3">
-        {/* AI Avatar */}
+        {/* AI Avatar
         <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
           <div className="w-4 h-4 bg-white rounded-sm"></div>
-        </div>
+        </div> */}
         
         {/* Message Content */}
         <div className="flex-1 min-w-0">

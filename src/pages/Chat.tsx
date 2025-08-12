@@ -60,7 +60,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="h-screen bg-chat-background flex overflow-hidden">
+    <div className="h-screen bg-chat-background flex overflow">
       {/* Sidebar */}
       <ChatSidebar
         isOpen={sidebarOpen}

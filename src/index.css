@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+    
     /* ChatGPT Dark Theme Colors */
     --background: 212 9% 7%;
     --foreground: 0 0% 90%;
@@ -16,7 +17,7 @@
     --popover: 217 19% 9%;
     --popover-foreground: 0 0% 90%;
 
-    --primary: 158 64% 52%;
+    --primary: 241 28% 35%;
     --primary-foreground: 212 9% 7%;
 
     --secondary: 217 19% 15%;
@@ -38,11 +39,13 @@
     --radius: 0.75rem;
 
     /* Chat specific colors */
-    --chat-background: 212 9% 7%;
-    --chat-sidebar: 217 19% 9%;
-    --chat-user-bubble: 158 64% 52%;
-    --chat-ai-bubble: 217 19% 15%;
-    --chat-input-bg: 217 19% 12%;
+    --chat-background: 0 0% 13%;
+;
+    --chat-sidebar:0 0% 9%;
+
+    --chat-user-bubble: 0 0% 19%;
+    --chat-ai-bubble: 0 0% 13%;
+    --chat-input-bg:  0 0% 19%;
     --chat-border: 217 19% 20%;
 
     /* Animations */
@@ -109,7 +112,7 @@
   }
 
   .chat-input {
-    @apply w-full rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground border-0 focus:ring-2 focus:ring-primary resize-none;
+    @apply w-full rounded-3xl px-4 py-3 text-foreground placeholder:text-muted-foreground border-0   resize-none;
     background: hsl(var(--chat-input-bg));
   }
 

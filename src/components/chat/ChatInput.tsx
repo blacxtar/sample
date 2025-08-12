@@ -51,7 +51,7 @@ const ChatInput = ({ onSendMessage, isLoading, onStopGeneration }: ChatInputProp
   };
 
   return (
-    <div className="sticky bottom-0 left-0 right-0 bg-chat-background border-t border-chat-border p-4">
+    <div className="absolute bottom-0 left-0 md:left-80 right-0 bg-chat-background p-3 pt-0">
       <div className="max-w-4xl mx-auto">
         {selectedImage && (
           <div className="mb-2 p-2 bg-chat-ai-bubble rounded-lg">
@@ -72,40 +72,44 @@ const ChatInput = ({ onSendMessage, isLoading, onStopGeneration }: ChatInputProp
         )}
         
         <form onSubmit={handleSubmit} className="relative">
-          <div className="flex items-end space-x-2">
-            {/* Attachment Button */}
-            <Button
+          <div className="flex  items-end space-x-2">
+           
+             
+             
+            
+            
+            {/* Input Area */}
+            <div className="flex-1 max-w-[95%] mx-auto ">
+              {/* Attachment Button */}
+              <div className="relative ">
+              <Button
               type="button"
               variant="ghost"
               size="sm"
               onClick={() => fileInputRef.current?.click()}
-              className="h-12 w-12 p-0 text-muted-foreground hover:text-foreground flex-shrink-0"
+              className="left-1 h-12 w-12 p-0 absolute rounded-full text-muted-foreground hover:text-foreground flex-shrink-0"
             >
               <Paperclip className="w-5 h-5" />
             </Button>
-            
-            {/* Input Area */}
-            <div className="flex-1 relative">
+              
               <textarea
                 ref={textareaRef}
                 value={message}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                placeholder="Message ChatGPT..."
-                className="chat-input min-h-[48px] max-h-[120px] w-full resize-none overflow-y-auto"
+                placeholder="Ask anything "
+                className="chat-input pl-12 min-h-[48px] max-h-[120px] w-full resize-none overflow-y-auto"
                 rows={1}
                 disabled={isLoading}
               />
-            </div>
-            
-            {/* Send/Stop Button */}
+             {/* Send/Stop Button */}
             {isLoading ? (
               <Button
                 type="button"
                 onClick={onStopGeneration}
                 size="sm"
                 variant="ghost"
-                className="h-12 w-12 p-0 text-muted-foreground hover:text-foreground flex-shrink-0"
+                className="h-9 w-9 p-0 absolute text-muted-foreground  right-2 bg-gray-500 rounded-full top-[5px] hover:text-foreground flex-shrink-0"
               >
                 <Square className="w-5 h-5" />
               </Button>
@@ -114,21 +118,26 @@ const ChatInput = ({ onSendMessage, isLoading, onStopGeneration }: ChatInputProp
                 type="submit"
                 disabled={!message.trim() && !selectedImage}
                 size="sm"
-                className="h-12 w-12 p-0 flex-shrink-0 disabled:opacity-50"
+                className="h-9 w-9 p-0 absolute right-2 bg-gray-400 rounded-full top-[5px] flex-shrink-0 disabled:opacity-50"
               >
                 <Send className="w-5 h-5" />
               </Button>
             )}
-            
+             
+              
             {/* Voice Button */}
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              className="h-12 w-12 p-0 text-muted-foreground hover:text-foreground flex-shrink-0"
+              className="h-12 w-12 p-0  absolute right-10 text-muted-foreground hover:text-foreground flex-shrink-0"
             >
               <Mic className="w-5 h-5" />
             </Button>
+            
+            </div>
+            
+           
           </div>
           
           {/* Hidden file input */}
@@ -139,13 +148,14 @@ const ChatInput = ({ onSendMessage, isLoading, onStopGeneration }: ChatInputProp
             onChange={handleImageSelect}
             className="hidden"
           />
+          </div>
         </form>
         
-        <p className="text-xs text-muted-foreground text-center mt-2">
+        <p className="text-xs text-muted-foreground text-center mt-0">
           ChatGPT can make mistakes. Check important info.
         </p>
       </div>
-    </div>
+    </div> 
   );
 };
 
