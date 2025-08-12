@@ -99,12 +99,12 @@
 
 @layer components {
   .chat-bubble-user {
-    @apply bg-chat-user text-white rounded-2xl px-4 py-3 max-w-[85%] ml-auto;
+    @apply text-white rounded-2xl px-4 py-3 max-w-[85%] ml-auto;
     background: hsl(var(--chat-user-bubble));
   }
 
   .chat-bubble-ai {
-    @apply bg-chat-ai text-foreground rounded-2xl px-4 py-3 max-w-[85%] mr-auto;
+    @apply text-foreground rounded-2xl px-4 py-3 max-w-[85%] mr-auto;
     background: hsl(var(--chat-ai-bubble));
   }
 
