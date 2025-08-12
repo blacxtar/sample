@@ -52,16 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+				// Chat-specific colors
+				'chat-background': 'hsl(var(--chat-background))',
+				'chat-sidebar': 'hsl(var(--chat-sidebar))',
+				'chat-user-bubble': 'hsl(var(--chat-user-bubble))',
+				'chat-ai-bubble': 'hsl(var(--chat-ai-bubble))',
+				'chat-input-bg': 'hsl(var(--chat-input-bg))',
+				'chat-border': 'hsl(var(--chat-border))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
