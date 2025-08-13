@@ -14,6 +14,8 @@ const Auth = () => {
   const router = useRouter();
   const { toast } = useToast();
 
+  
+
   useEffect(() => {
     // Check if user is already logged in
     const checkAuth = async () => {

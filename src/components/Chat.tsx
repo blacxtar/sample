@@ -9,7 +9,7 @@ interface Message {
   id: string;
   content: string;
   role: "user" | "assistant";
-  timestamp: string;
+  
   imageUrl?: string;
 }
 
@@ -24,7 +24,7 @@ const Chat = () => {
       id: Date.now().toString(),
       content,
       role: "user",
-      timestamp: new Date().toISOString(),
+     
       imageUrl: image ? URL.createObjectURL(image) : undefined,
     };
 
@@ -34,10 +34,10 @@ const Chat = () => {
     // Simulate AI response (replace with actual API call)
     setTimeout(() => {
       const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: crypto.randomUUID(),
         content: `I understand you're asking about: "${content}". This is a demo response. To integrate with actual AI APIs (like Google Gemini), you'll need to connect to Supabase for backend functionality and API key management.`,
         role: "assistant",
-        timestamp: new Date().toISOString(),
+       
       };
       
       setMessages(prev => [...prev, aiMessage]);

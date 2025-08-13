@@ -1,11 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider } from "@/hooks/useAuth";
+
 import ClientProviders from './client-providers';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -13,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'ChatGPT Clone - AI Chat Assistant',
   description: 'Beautiful mobile-first ChatGPT clone with dark theme, chat bubbles, and smooth animations',
-  authors: [{ name: 'Lovable' }],
+  authors: [{ name: 'Salman Ahmad' }],
   openGraph: {
     title: 'ChatGPT Clone',
     description: 'Beautiful mobile-first ChatGPT clone with dark theme, chat bubbles, and smooth animations',
