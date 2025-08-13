@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -14,12 +14,12 @@ const Auth = () => {
   const router = useRouter();
   const { toast } = useToast();
 
-  
-
   useEffect(() => {
     // Check if user is already logged in
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
         router.push("/");
       }
@@ -31,10 +31,10 @@ const Auth = () => {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/`
-        }
+          redirectTo: `${window.location.origin}/`,
+        },
       });
 
       if (error) {
@@ -46,7 +46,7 @@ const Auth = () => {
       }
     } catch (error) {
       toast({
-        title: "Authentication Error", 
+        title: "Authentication Error",
         description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
@@ -70,7 +70,9 @@ const Auth = () => {
           {/* Header */}
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-bold text-foreground">ChatGPT</h1>
-            <h2 className="text-2xl font-semibold text-foreground">Welcome back</h2>
+            <h2 className="text-2xl font-semibold text-foreground">
+              Welcome back
+            </h2>
           </div>
 
           {/* Email Input */}
@@ -89,7 +91,7 @@ const Auth = () => {
               />
             </div>
 
-            <Button 
+            <Button
               onClick={handleEmailContinue}
               className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full h-12"
             >
@@ -99,10 +101,10 @@ const Auth = () => {
 
           {/* Sign up link */}
           <div className="text-center">
-            <span className="text-muted-foreground">Don't have an account? </span>
-            <button className="text-primary hover:underline">
-              Sign up
-            </button>
+            <span className="text-muted-foreground">
+              Dont have an account?
+            </span>
+            <button className="text-primary hover:underline">Sign up</button>
           </div>
 
           {/* Divider */}
@@ -111,7 +113,9 @@ const Auth = () => {
               <div className="w-full border-t border-chat-border"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-chat-sidebar px-4 text-muted-foreground">OR</span>
+              <span className="bg-chat-sidebar px-4 text-muted-foreground">
+                OR
+              </span>
             </div>
           </div>
 

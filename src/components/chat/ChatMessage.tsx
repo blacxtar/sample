@@ -23,7 +23,7 @@ interface ChatMessageProps {
 }
 
 const ChatMessage = ({ message, isLatest}: ChatMessageProps) => {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState("");
  
   const getMessageContent = (message: UIMessage): string => {
     return message.parts
@@ -36,8 +36,8 @@ const ChatMessage = ({ message, isLatest}: ChatMessageProps) => {
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(messageContent);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopied("true");
+    setTimeout(() => setCopied(""), 2000);
   };
 
   if (message.role === "user") {
