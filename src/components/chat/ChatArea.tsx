@@ -4,14 +4,20 @@ import { Menu } from "lucide-react";
 import ChatMessage from "./ChatMessage";
 import TypingIndicator from "./TypingIndicator";
 
-interface Message {
+// AI SDK v5 message structure
+interface UIMessage {
   id: string;
-  content: string;
-  role: "user" | "assistant";
+  role: 'user' | 'assistant' | 'system';
+  parts: Array<{
+    type: 'text' | 'image' | string; // string for tool parts like 'tool-weather'
+    text?: string;
+    image?: string;
+    [key: string]: any; // for tool-specific properties
+  }>;
 }
 
 interface ChatAreaProps {
-  messages: Message[];
+  messages: UIMessage[]; // Use AI SDK's v5 UIMessage type
   isLoading?: boolean;
   onToggleSidebar: () => void;
 }
@@ -31,8 +37,8 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
     <div className="flex-1 flex flex-col h-screen">
       {/* Header */}
       <div className="sticky top-0 bg-chat-background/80 backdrop-blur-sm border-chat-border p-[0.60rem] z-10">
-        <div className="flex items-center  justify-between">
-          <div className="flex  items-center space-x-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
               size="sm"
@@ -42,9 +48,8 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
               <Menu className="w-5 h-5" />
             </Button>
           </div>
-            <h1 className="text-lg  font-normal">ChatGPT</h1>
-
-          <div className="flex  space-x-2">
+            <h1 className="text-lg font-normal">ChatGPT</h1>
+           <div className="flex space-x-2">
             <div className="hidden sm:block px-3 py-1 bg-primary text-foreground-primary text-sm rounded-full border border-primary/20">
               Upgrade your plan
             </div>

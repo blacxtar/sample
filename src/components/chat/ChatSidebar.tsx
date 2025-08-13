@@ -20,7 +20,7 @@ interface ChatSidebarProps {
 
 const UserProfile = () => {
   const { user, signOut } = useAuth();
-  console.log(user)
+  // console.log(user)
   const getInitials = (email: string) => {
     return email.slice(0, 2).toUpperCase();
   };

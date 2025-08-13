@@ -4,51 +4,33 @@ import { useState } from "react";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatArea from "@/components/chat/ChatArea";
 import ChatInput from "@/components/chat/ChatInput";
-
-interface Message {
-  id: string;
-  content: string;
-  role: "user" | "assistant";
-  
-  imageUrl?: string;
-}
+import { useChat } from '@ai-sdk/react';
 
 const Chat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentChatId, setCurrentChatId] = useState<string>();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isInputLoading, setIsInputLoading] = useState(false);
+  
+  // Use the AI SDK v5's useChat hook - only returns messages and sendMessage
+  const { messages, sendMessage } = useChat(
+  );
 
   const handleSendMessage = async (content: string, image?: File) => {
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content,
-      role: "user",
-     
-      imageUrl: image ? URL.createObjectURL(image) : undefined,
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setIsLoading(true);
-
-    // Simulate AI response (replace with actual API call)
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: crypto.randomUUID(),
-        content: `I understand you're asking about: "${content}". This is a demo response. To integrate with actual AI APIs (like Google Gemini), you'll need to connect to Supabase for backend functionality and API key management.`,
-        role: "assistant",
-       
-      };
-      
-      setMessages(prev => [...prev, aiMessage]);
-      setIsLoading(false);
-    }, 1500);
+    // For now, we'll handle text only. Image handling would need additional setup
+    setIsInputLoading(true);
+    try {
+      await sendMessage({ text: content });
+    } finally {
+      setIsInputLoading(false);
+    }
   };
 
   const handleNewChat = () => {
-    setMessages([]);
     setCurrentChatId(undefined);
     setSidebarOpen(false);
+    // You might want to reset the chat here - the AI SDK doesn't have a built-in reset
+    // You could reload the page or implement custom logic
+    // window.location.reload();
   };
 
   const handleSelectChat = (chatId: string) => {
@@ -58,8 +40,15 @@ const Chat = () => {
   };
 
   const handleStopGeneration = () => {
-    setIsLoading(false);
+    // In v5, there's no direct stop function available from useChat
+    // You might need to implement this differently or check if there's an updated API
+    setIsInputLoading(false);
   };
+
+  // Check if the last message is from assistant and still being generated
+  const isLoading = isInputLoading || (messages.length > 0 && 
+    messages[messages.length - 1]?.role === 'assistant' && 
+    messages[messages.length - 1]?.parts?.some(part => part.type === 'text' && !part.text?.trim()));
 
   return (
     <div className="h-screen bg-chat-background flex overflow">
@@ -75,11 +64,11 @@ const Chat = () => {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0">
         <ChatArea
-          messages={messages}
+          messages={messages} // Pass AI SDK messages directly
           isLoading={isLoading}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         />
-        
+                
         <ChatInput
           onSendMessage={handleSendMessage}
           isLoading={isLoading}

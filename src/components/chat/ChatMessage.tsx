@@ -2,22 +2,39 @@ import { useState } from "react";
 import { Copy, ThumbsUp, ThumbsDown, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// AI SDK v5 message structure
+interface UIMessage {
+  id: string;
+  role: 'user' | 'assistant' | 'system';
+  parts: Array<{
+    type: 'text' | 'image' | string; // string for tool parts like 'tool-weather'
+    text?: string;
+    image?: string;
+    [key: string]: any; // for tool-specific properties
+  }>;
+}
+
 interface ChatMessageProps {
-  message: {
-    id: string;
-    content: string;
-    role: "user" | "assistant";
-    timestamp: string;
-    imageUrl?: string;
-  };
+  message: UIMessage; // Use AI SDK's v5 UIMessage type
   isLatest?: boolean;
 }
 
 const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
   const [copied, setCopied] = useState(false);
+  // console.log("message in chatmessages: ",message)
+  // Extract text content from AI SDK v5 message parts
+  const getMessageContent = (message: UIMessage): string => {
+    return message.parts
+      .filter(part => part.type === 'text')
+      .map(part => part.text || '')
+      .join('');
+  };
+  
 
+  const messageContent = getMessageContent(message);
+// console.log("Message Content :",messageContent)
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(message.content);
+    await navigator.clipboard.writeText(messageContent);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -26,14 +43,18 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
     return (
       <div className="flex justify-end mb-4 animate-fade-in-up">
         <div className="chat-bubble-user">
-          <p className="text-sm leading-relaxed">{message.content}</p>
-          {message.imageUrl && (
-            <img 
-              src={message.imageUrl} 
-              alt="User uploaded image" 
-              className="mt-2 rounded-lg max-w-full"
-            />
-          )}
+          <p className="text-sm leading-relaxed">{messageContent}</p>
+          {/* Handle image parts if needed */}
+          {message.parts
+            .filter(part => part.type === 'image')
+            .map((part, index) => (
+              <img
+                key={index}
+                src={part.image}
+                alt="User uploaded image"
+                className="mt-2 rounded-lg max-w-full"
+              />
+            ))}
         </div>
       </div>
     );
@@ -42,24 +63,40 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
   return (
     <div className="flex flex-col mb-6 animate-fade-in-up">
       <div className="flex items-start space-x-3">
-        {/* AI Avatar
-        <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-          <div className="w-4 h-4 bg-white rounded-sm"></div>
-        </div> */}
-        
-        {/* Message Content */}
         <div className="flex-1 min-w-0">
           <div className="chat-bubble-ai">
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
-            {message.imageUrl && (
-              <img 
-                src={message.imageUrl} 
-                alt="AI generated image" 
-                className="mt-3 rounded-lg max-w-full"
-              />
-            )}
+            {/* Render text parts */}
+            {message.parts.map((part, index) => {
+              switch (part.type) {
+                case 'text':
+                  return (
+                    <p key={index} className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {part.text}
+                    </p>
+                  );
+                case 'image':
+                  return (
+                    <img
+                      key={index}
+                      src={part.image}
+                      alt="AI generated image"
+                      className="mt-3 rounded-lg max-w-full"
+                    />
+                  );
+                default:
+                  // Handle tool parts (like 'tool-weather')
+                  if (part.type.startsWith('tool-')) {
+                    return (
+                      <pre key={index} className="mt-2 text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded overflow-x-auto">
+                        {JSON.stringify(part, null, 2)}
+                      </pre>
+                    );
+                  }
+                  return null;
+              }
+            })}
           </div>
-          
+                    
           {/* Action Buttons */}
           <div className="flex items-center space-x-2 mt-2 ml-1">
             <Button
@@ -70,7 +107,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
             >
               <Copy className="w-3.5 h-3.5" />
             </Button>
-            
+                        
             <Button
               variant="ghost"
               size="sm"
@@ -78,7 +115,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
             >
               <ThumbsUp className="w-3.5 h-3.5" />
             </Button>
-            
+                        
             <Button
               variant="ghost"
               size="sm"
@@ -86,7 +123,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
             >
               <ThumbsDown className="w-3.5 h-3.5" />
             </Button>
-            
+                        
             {isLatest && (
               <Button
                 variant="ghost"
@@ -99,7 +136,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
           </div>
         </div>
       </div>
-      
+            
       {copied && (
         <div className="text-xs text-muted-foreground mt-1 ml-10">
           Copied to clipboard
