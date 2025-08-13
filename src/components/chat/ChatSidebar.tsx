@@ -34,8 +34,6 @@ const UserProfile = () => {
     return email.slice(0, 2).toUpperCase();
   };
 
- 
-
   return (
     <div className="p-3 border-t border-chat-border">
       <div className="flex items-center space-x-3">
@@ -112,10 +110,14 @@ const ChatSidebar = ({
           {/* Header */}
           <div className="flex items-center justify-between p-2  ">
             <div className="flex items-center space-x-3">
-              {/* <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <div className="w-5 h-5 bg-white rounded-sm"></div>
-              </div> */}
-                <Image src='/chatgpt-logo.jpg' alt="gpt-logo" width={32} height={32}/>
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mx-auto">
+                <Image
+                  src="/chatgpt-logo.jpg"
+                  alt="gpt-logo"
+                  width={32}
+                  height={32}
+                />
+              </div>
             </div>
             <Button
               variant="ghost"

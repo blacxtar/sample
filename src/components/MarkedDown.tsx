@@ -1,9 +1,9 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
-// import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
 import { Copy, Check } from "lucide-react";
 
 interface MarkdownRendererProps {
@@ -18,9 +18,9 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   onCopy,
 }) => {
   const markdownComponents = {
-    code({node, inline, className, children, ...props}: any) {
-      const match = /language-(\w+)/.exec(className || '');
-      const codeString = String(children).replace(/\n$/, '');
+    code({ node, inline, className, children, ...props }: any) {
+      const match = /language-(\w+)/.exec(className || "");
+      const codeString = String(children).replace(/\n$/, "");
 
       if (!inline && match) {
         return (
@@ -33,12 +33,16 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                 onClick={() => onCopy(codeString)}
                 className="text-gray-300 hover:text-white transition-colors p-1 rounded"
               >
-                {copiedText === codeString ? <Check size={14} /> : <Copy size={14} />}
+                {copiedText === codeString ? (
+                  <Check size={14} />
+                ) : (
+                  <Copy size={14} />
+                )}
               </button>
             </div>
             <SyntaxHighlighter
-              style={ tomorrow}
-              customStyle={{ fontSize: '0.9rem' }}
+              style={tomorrow}
+              customStyle={{ fontSize: "0.9rem" }}
               language={match[1]}
               PreTag="div"
               className="!mt-0 !bg-[#171717] !rounded-t-none"
@@ -51,57 +55,15 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       }
 
       return (
-        <code className=" text-white bg-[#4e4c4c] px-2 py-1 my-1 rounded text-sm font-mono " {...props}>
+        <code
+          className=" text-white bg-[#4e4c4c] px-2 py-1 my-1 rounded text-sm font-mono "
+          {...props}
+        >
           {children}
         </code>
       );
     },
-    // code({
-    //   node,
-    //   inline,
-    //   className,
-    //   children,
-    //   ...props
-    // }: {
-    //   node: any;
-    //   inline: boolean;
-    //   className?: string;
-    //   children: React.ReactNode;
-    // }) {
-    //   const match = /language-(\w+)/.exec(className || "");
-    //   const codeString = String(children).replace(/\n$/, "");
 
-    //   if (!inline && match) {
-    //     return (
-    //       <div className="relative group my-4">
-    //         {/* Header */}
-    //         <div className="flex items-center justify-between bg-gray-800 px-3 py-1.5 rounded-t-lg border border-gray-700">
-    //           <span className="text-xs font-medium text-gray-300 uppercase tracking-wide">
-    //             {match[1]}
-    //           </span>
-    //           {/* Copy button here */}
-    //         </div>
-
-    //         {/* Syntax Highlighter */}
-    //         <SyntaxHighlighter
-    //           language={match[1]}
-    //           style={oneDark}
-    //           PreTag="div"
-    //           className="!mt-0 !rounded-t-none border border-t-0 border-gray-700"
-    //           {...props}
-    //         >
-    //           {codeString}
-    //         </SyntaxHighlighter>
-    //       </div>
-    //     );
-    //   }
-
-    //   return (
-    //     <code className="bg-gray-800 text-blue-300 px-1.5 py-0.5 rounded text-sm font-mono border border-gray-700">
-    //       {children}
-    //     </code>
-    //   );
-    // },
     blockquote({ children }: any) {
       return (
         <blockquote className="border-l-4 border-gray-400 pl-4 py-2 my-3 bg-[#424242] rounded-r-lg italic text-white">
