@@ -1,4 +1,5 @@
-import { openai } from '@ai-sdk/openai';
+// import { openai } from '@ai-sdk/openai';
+import { google } from '@ai-sdk/google';
 import { streamText, UIMessage, convertToModelMessages } from 'ai';
 
 // Allow streaming responses up to 30 seconds
@@ -8,7 +9,7 @@ export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
   const result = streamText({
-    model: openai('gpt-4o'),
+    model: google('gemini-2.0-flash'),
     messages: convertToModelMessages(messages),
   });
 

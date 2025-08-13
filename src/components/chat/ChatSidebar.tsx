@@ -29,14 +29,12 @@ interface ChatSidebarProps {
 
 const UserProfile = () => {
   const { user, signOut } = useAuth();
-  console.log(user);
+
   const getInitials = (email: string) => {
     return email.slice(0, 2).toUpperCase();
   };
 
-  const getUserName = (email: string) => {
-    return email.split("@")[0];
-  };
+ 
 
   return (
     <div className="p-3 border-t border-chat-border">
