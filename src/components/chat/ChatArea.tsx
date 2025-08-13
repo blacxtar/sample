@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import ChatMessage from "./ChatMessage";
 import TypingIndicator from "./TypingIndicator";
+import Image from "next/image";
 
 // AI SDK v5 message structure
 interface UIMessage {
   id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   parts: Array<{
-    type: 'text' | 'image' | string; // string for tool parts like 'tool-weather'
+    type: "text" | "image" | string; // string for tool parts like 'tool-weather'
     text?: string;
     image?: string;
     [key: string]: any; // for tool-specific properties
@@ -24,17 +25,13 @@ interface ChatAreaProps {
 
 const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
 
   const scrollToBottom = () => {
-  
-    messagesEndRef.current?.scrollIntoView({behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
- 
 
   useEffect(() => {
     scrollToBottom();
-    
   }, [messages, isLoading]);
 
   return (
@@ -52,8 +49,8 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
               <Menu className="w-5 h-5" />
             </Button>
           </div>
-            <h1 className="text-lg font-normal">ChatGPT</h1>
-           <div className="flex space-x-2">
+          <h1 className="text-lg font-normal">ChatGPT</h1>
+          <div className="flex space-x-2">
             <div className="hidden sm:block px-3 py-1 bg-primary text-foreground-primary text-sm rounded-full border border-primary/20">
               Upgrade your plan
             </div>
@@ -66,17 +63,23 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
         <div className="max-w-4xl mx-auto px-4 py-6">
           {messages.length === 0 ? (
             <div className="text-center py-12">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <div className="w-6 h-6 bg-white rounded-sm"></div>
+              <div className="w-9 h-9 bg-white rounded-lg flex mb-2 items-center justify-center mx-auto">
+                <Image
+                  src="/chatgpt-logo.jpg"
+                  alt="gpt-logo"
+                  width={32}
+                  height={32}
+                />
               </div>
-              <h2 className="text-2xl font-semibold mb-2">What can I help with?</h2>
+              <h2 className="text-2xl font-semibold mb-2">
+                What can I help with?
+              </h2>
               <p className="text-muted-foreground">
                 Start a conversation or try one of the suggestions below
               </p>
             </div>
           ) : (
             <>
-              
               {messages.map((message, index) => (
                 <ChatMessage
                   // topRef={messagesEndRef}
@@ -85,14 +88,11 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
                   isLatest={index === messages.length - 1}
                 />
               ))}
-              
             </>
           )}
-      
         </div>
-            <div  ref={messagesEndRef} />
+        <div ref={messagesEndRef} />
       </div>
-      
     </div>
   );
 };

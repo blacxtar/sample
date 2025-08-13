@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import Image from "next/image";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -23,8 +24,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       <div className="h-screen bg-chat-background flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mx-auto">
-            <div className="w-5 h-5 bg-white rounded-sm"></div>
+            {/* <div className="w-5 h-5 bg-white rounded-sm"></div>
+             */}
+              <Image src='/chatgpt-logo.jpg' alt="gpt-logo" width={32} height={32}/>
           </div>
+         
           <div className="text-muted-foreground">Loading...</div>
         </div>
       </div>

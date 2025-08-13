@@ -25,7 +25,8 @@
     "loader": "default",
     "loaderFile": "",
     "domains": [
-      "lh3.googleusercontent.com"
+      "lh3.googleusercontent.com",
+      "http://localhost:3000"
     ],
     "disableStaticImages": false,
     "minimumCacheTTL": 60,

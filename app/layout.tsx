@@ -7,19 +7,19 @@ import ClientProviders from './client-providers';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ChatGPT Clone - AI Chat Assistant',
+  title: 'ChatGPT-AI Chat Assistant',
   description: 'Beautiful mobile-first ChatGPT clone with dark theme, chat bubbles, and smooth animations',
   authors: [{ name: 'Salman Ahmad' }],
   openGraph: {
     title: 'ChatGPT Clone',
     description: 'Beautiful mobile-first ChatGPT clone with dark theme, chat bubbles, and smooth animations',
     type: 'website',
-    images: ['https://lovable.dev/opengraph-image-p98pqg.png'],
+    images: ['/chatgpt-logo.jpg'],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@lovable_dev',
-    images: ['https://lovable.dev/opengraph-image-p98pqg.png'],
+    images: ['/chatgpt-logo.jpg'],
   },
 }
 
