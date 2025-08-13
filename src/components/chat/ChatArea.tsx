@@ -58,7 +58,7 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 bg-red-200 overflow-y-auto">
+      <div className="flex-1  overflow-y-auto">
         <div className="max-w-4xl mx-auto px-4 py-6">
           {messages.length === 0 ? (
             <div className="text-center py-12">
