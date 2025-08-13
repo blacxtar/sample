@@ -12,9 +12,8 @@ const Chat = () => {
   const [isInputLoading, setIsInputLoading] = useState(false);
   
   // Use the AI SDK v5's useChat hook - only returns messages and sendMessage
-  const { messages, sendMessage } = useChat(
-  );
-
+  const { messages, sendMessage } = useChat();
+// console.log(messages)
   const handleSendMessage = async (content: string, image?: File) => {
     // For now, we'll handle text only. Image handling would need additional setup
     setIsInputLoading(true);
