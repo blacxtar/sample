@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -9,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -17,11 +19,11 @@ const Auth = () => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate("/");
+        router.push("/");
       }
     };
     checkAuth();
-  }, [navigate]);
+  }, [router]);
 
   const handleGoogleAuth = async () => {
     setIsLoading(true);
