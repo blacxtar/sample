@@ -19,7 +19,7 @@ exports.modules = {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST),\n/* harmony export */   maxDuration: () => (/* binding */ maxDuration)\n/* harmony export */ });\n/* harmony import */ var _ai_sdk_google__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ai-sdk/google */ \"(rsc)/./node_modules/@ai-sdk/google/dist/index.mjs\");\n/* harmony import */ var ai__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ai */ \"(rsc)/./node_modules/ai/dist/index.mjs\");\n/* harmony import */ var app_tools_generateImage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! app/tools/generateImage */ \"(rsc)/./app/tools/generateImage.ts\");\n\n// import {openai}\n\n\nconst tools = {\n    generateImage: app_tools_generateImage__WEBPACK_IMPORTED_MODULE_0__.generateImage\n};\n// Allow streaming responses up to 30 seconds\nconst maxDuration = 30;\nasync function POST(req) {\n    const { messages } = await req.json();\n    const SYSTEM_PROMPT = `\n        You are an AI assistant named \"ChatGPT Mobile\" running inside a mobile-first web app.\n        Your goals:\n        1. Provide accurate, concise, and user-friendly answers.\n        2. Always think step-by-step before answering.\n        3. Be warm, helpful, and slightly witty without being distracting.\n        4. Never guess — if unsure, ask clarifying questions.\n        5. Always format responses clearly for mobile viewing, using short paragraphs, bullet points, or numbered lists.\n        6. For code answers:\n          - Use syntax highlighting.\n          - Keep explanations under each code block.\n          - Avoid overly long code unless necessary; focus on clarity.\n        7. You can answer about:\n          - Programming (JavaScript, TypeScript, React, Next.js, Bootstrap, tRPC, Supabase, Auth0, Google OAuth, API integration).\n          - AI & machine learning concepts.\n          - General knowledge & reasoning.\n        8. If the user requests an image, call the image-generation API (Gemini or chosen provider) and return the image URL or preview.\n        9. Avoid harmful, unsafe, or illegal instructions.\n        10. Be context-aware: maintain the conversation and adapt to the user's skill level.    \n        Respond with Emojis when suitable like for heading, and all.\n        Tone: Friendly, smart, and confident .\n        If the user provides unclear or incomplete instructions, respond by asking *specific* clarifying questions before answering.\n        `;\n    const result = (0,ai__WEBPACK_IMPORTED_MODULE_1__.streamText)({\n        // model: openai(\"gpt-4\"),\n        model: (0,_ai_sdk_google__WEBPACK_IMPORTED_MODULE_2__.google)(\"gemini-2.0-flash\"),\n        system: SYSTEM_PROMPT,\n        messages: (0,ai__WEBPACK_IMPORTED_MODULE_1__.convertToModelMessages)(messages),\n        tools\n    });\n    return result.toUIMessageStreamResponse();\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvYXBpL2NoYXQvcm91dGUudHMiLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFDd0M7QUFDeEMsa0JBQWtCO0FBQ2lEO0FBRVg7QUFFeEQsTUFBTUksUUFBUTtJQUFFRCxhQUFhQSxvRUFBQUE7QUFBQztBQUU5Qiw2Q0FBNkM7QUFDdEMsTUFBTUUsY0FBYyxHQUFHO0FBRXZCLGVBQWVDLEtBQUtDLEdBQVk7SUFDckMsTUFBTSxFQUFFQyxRQUFRLEVBQUUsR0FBOEIsTUFBTUQsSUFBSUUsSUFBSTtJQUM5RCxNQUFNQyxnQkFBZ0IsQ0FBQzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztRQXNCakIsQ0FBQztJQUVQLE1BQU1DLFNBQVNWLDhDQUFVQSxDQUFDO1FBQ3hCLDBCQUEwQjtRQUMxQlcsT0FBT1osc0RBQU1BLENBQUM7UUFDZGEsUUFBUUg7UUFDUkYsVUFBVU4sMERBQXNCQSxDQUFDTTtRQUNqQ0o7SUFDRjtJQUVBLE9BQU9PLE9BQU9HLHlCQUF5QjtBQUN6QyIsInNvdXJjZXMiOlsiL1VzZXJzL3NhbG1hbi9EZXNrdG9wL2NoYXQtc25hcC1nZW4vYXBwL2FwaS9jaGF0L3JvdXRlLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IG9wZW5haSB9IGZyb20gXCJAYWktc2RrL29wZW5haVwiO1xuaW1wb3J0IHsgZ29vZ2xlIH0gZnJvbSBcIkBhaS1zZGsvZ29vZ2xlXCI7XG4vLyBpbXBvcnQge29wZW5haX1cbmltcG9ydCB7IHN0cmVhbVRleHQsIFVJTWVzc2FnZSwgY29udmVydFRvTW9kZWxNZXNzYWdlcyB9IGZyb20gXCJhaVwiO1xuXG5pbXBvcnQgeyBnZW5lcmF0ZUltYWdlIH0gZnJvbSBcImFwcC90b29scy9nZW5lcmF0ZUltYWdlXCI7XG5cbmNvbnN0IHRvb2xzID0geyBnZW5lcmF0ZUltYWdlIH07XG5cbi8vIEFsbG93IHN0cmVhbWluZyByZXNwb25zZXMgdXAgdG8gMzAgc2Vjb25kc1xuZXhwb3J0IGNvbnN0IG1heER1cmF0aW9uID0gMzA7XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBQT1NUKHJlcTogUmVxdWVzdCkge1xuICBjb25zdCB7IG1lc3NhZ2VzIH06IHsgbWVzc2FnZXM6IFVJTWVzc2FnZVtdIH0gPSBhd2FpdCByZXEuanNvbigpO1xuICBjb25zdCBTWVNURU1fUFJPTVBUID0gYFxuICAgICAgICBZb3UgYXJlIGFuIEFJIGFzc2lzdGFudCBuYW1lZCBcIkNoYXRHUFQgTW9iaWxlXCIgcnVubmluZyBpbnNpZGUgYSBtb2JpbGUtZmlyc3Qgd2ViIGFwcC5cbiAgICAgICAgWW91ciBnb2FsczpcbiAgICAgICAgMS4gUHJvdmlkZSBhY2N1cmF0ZSwgY29uY2lzZSwgYW5kIHVzZXItZnJpZW5kbHkgYW5zd2Vycy5cbiAgICAgICAgMi4gQWx3YXlzIHRoaW5rIHN0ZXAtYnktc3RlcCBiZWZvcmUgYW5zd2VyaW5nLlxuICAgICAgICAzLiBCZSB3YXJtLCBoZWxwZnVsLCBhbmQgc2xpZ2h0bHkgd2l0dHkgd2l0aG91dCBiZWluZyBkaXN0cmFjdGluZy5cbiAgICAgICAgNC4gTmV2ZXIgZ3Vlc3Mg4oCUIGlmIHVuc3VyZSwgYXNrIGNsYXJpZnlpbmcgcXVlc3Rpb25zLlxuICAgICAgICA1LiBBbHdheXMgZm9ybWF0IHJlc3BvbnNlcyBjbGVhcmx5IGZvciBtb2JpbGUgdmlld2luZywgdXNpbmcgc2hvcnQgcGFyYWdyYXBocywgYnVsbGV0IHBvaW50cywgb3IgbnVtYmVyZWQgbGlzdHMuXG4gICAgICAgIDYuIEZvciBjb2RlIGFuc3dlcnM6XG4gICAgICAgICAgLSBVc2Ugc3ludGF4IGhpZ2hsaWdodGluZy5cbiAgICAgICAgICAtIEtlZXAgZXhwbGFuYXRpb25zIHVuZGVyIGVhY2ggY29kZSBibG9jay5cbiAgICAgICAgICAtIEF2b2lkIG92ZXJseSBsb25nIGNvZGUgdW5sZXNzIG5lY2Vzc2FyeTsgZm9jdXMgb24gY2xhcml0eS5cbiAgICAgICAgNy4gWW91IGNhbiBhbnN3ZXIgYWJvdXQ6XG4gICAgICAgICAgLSBQcm9ncmFtbWluZyAoSmF2YVNjcmlwdCwgVHlwZVNjcmlwdCwgUmVhY3QsIE5leHQuanMsIEJvb3RzdHJhcCwgdFJQQywgU3VwYWJhc2UsIEF1dGgwLCBHb29nbGUgT0F1dGgsIEFQSSBpbnRlZ3JhdGlvbikuXG4gICAgICAgICAgLSBBSSAmIG1hY2hpbmUgbGVhcm5pbmcgY29uY2VwdHMuXG4gICAgICAgICAgLSBHZW5lcmFsIGtub3dsZWRnZSAmIHJlYXNvbmluZy5cbiAgICAgICAgOC4gSWYgdGhlIHVzZXIgcmVxdWVzdHMgYW4gaW1hZ2UsIGNhbGwgdGhlIGltYWdlLWdlbmVyYXRpb24gQVBJIChHZW1pbmkgb3IgY2hvc2VuIHByb3ZpZGVyKSBhbmQgcmV0dXJuIHRoZSBpbWFnZSBVUkwgb3IgcHJldmlldy5cbiAgICAgICAgOS4gQXZvaWQgaGFybWZ1bCwgdW5zYWZlLCBvciBpbGxlZ2FsIGluc3RydWN0aW9ucy5cbiAgICAgICAgMTAuIEJlIGNvbnRleHQtYXdhcmU6IG1haW50YWluIHRoZSBjb252ZXJzYXRpb24gYW5kIGFkYXB0IHRvIHRoZSB1c2VyJ3Mgc2tpbGwgbGV2ZWwuICAgIFxuICAgICAgICBSZXNwb25kIHdpdGggRW1vamlzIHdoZW4gc3VpdGFibGUgbGlrZSBmb3IgaGVhZGluZywgYW5kIGFsbC5cbiAgICAgICAgVG9uZTogRnJpZW5kbHksIHNtYXJ0LCBhbmQgY29uZmlkZW50IC5cbiAgICAgICAgSWYgdGhlIHVzZXIgcHJvdmlkZXMgdW5jbGVhciBvciBpbmNvbXBsZXRlIGluc3RydWN0aW9ucywgcmVzcG9uZCBieSBhc2tpbmcgKnNwZWNpZmljKiBjbGFyaWZ5aW5nIHF1ZXN0aW9ucyBiZWZvcmUgYW5zd2VyaW5nLlxuICAgICAgICBgO1xuXG4gIGNvbnN0IHJlc3VsdCA9IHN0cmVhbVRleHQoe1xuICAgIC8vIG1vZGVsOiBvcGVuYWkoXCJncHQtNFwiKSxcbiAgICBtb2RlbDogZ29vZ2xlKFwiZ2VtaW5pLTIuMC1mbGFzaFwiKSxcbiAgICBzeXN0ZW06IFNZU1RFTV9QUk9NUFQsXG4gICAgbWVzc2FnZXM6IGNvbnZlcnRUb01vZGVsTWVzc2FnZXMobWVzc2FnZXMpLFxuICAgIHRvb2xzLFxuICB9KTtcblxuICByZXR1cm4gcmVzdWx0LnRvVUlNZXNzYWdlU3RyZWFtUmVzcG9uc2UoKTtcbn1cbiJdLCJuYW1lcyI6WyJnb29nbGUiLCJzdHJlYW1UZXh0IiwiY29udmVydFRvTW9kZWxNZXNzYWdlcyIsImdlbmVyYXRlSW1hZ2UiLCJ0b29scyIsIm1heER1cmF0aW9uIiwiUE9TVCIsInJlcSIsIm1lc3NhZ2VzIiwianNvbiIsIlNZU1RFTV9QUk9NUFQiLCJyZXN1bHQiLCJtb2RlbCIsInN5c3RlbSIsInRvVUlNZXNzYWdlU3RyZWFtUmVzcG9uc2UiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./app/api/chat/route.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST),\n/* harmony export */   maxDuration: () => (/* binding */ maxDuration)\n/* harmony export */ });\n/* harmony import */ var _ai_sdk_google__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ai-sdk/google */ \"(rsc)/./node_modules/@ai-sdk/google/dist/index.mjs\");\n/* harmony import */ var ai__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ai */ \"(rsc)/./node_modules/ai/dist/index.mjs\");\n/* harmony import */ var app_tools_generateImage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! app/tools/generateImage */ \"(rsc)/./app/tools/generateImage.ts\");\n\n// import {openai}\n\n\nconst tools = {\n    generateImage: app_tools_generateImage__WEBPACK_IMPORTED_MODULE_0__.generateImage\n};\n// Allow streaming responses up to 30 seconds\nconst maxDuration = 30;\nasync function POST(req) {\n    const { messages } = await req.json();\n    const SYSTEM_PROMPT = `\n        You are an AI assistant named \"ChatGPT Mobile\" running inside a mobile-first web app.\n        Your goals:\n        1. Provide accurate, concise, and user-friendly answers.\n        2. Always think step-by-step before answering.\n        3. Be warm, helpful, and slightly witty without being distracting.\n        4. Never guess — if unsure, ask clarifying questions.\n        5. Always format responses clearly for mobile viewing, using short paragraphs, bullet points, or numbered lists.\n        6. For code answers:\n          - Use syntax highlighting.\n          - Keep explanations under each code block.\n          - Avoid overly long code unless necessary; focus on clarity.\n        7. You can answer about:\n          - Programming (JavaScript, TypeScript, React, Next.js, Bootstrap, tRPC, Supabase, Auth0, Google OAuth, API integration).\n          - AI & machine learning concepts.\n          - General knowledge & reasoning.\n        8. If the user requests an image, call the image-generation API (Gemini or chosen provider) and return the image URL .\n        9. Avoid harmful, unsafe, or illegal instructions.\n        10. Be context-aware: maintain the conversation and adapt to the user's skill level.    \n        Respond with Emojis when suitable like for heading, and all.\n        Tone: Friendly, smart, and confident .\n        If the user provides unclear or incomplete instructions, respond by asking *specific* clarifying questions before answering.\n        `;\n    const result = (0,ai__WEBPACK_IMPORTED_MODULE_1__.streamText)({\n        // model: openai(\"gpt-4\"),\n        model: (0,_ai_sdk_google__WEBPACK_IMPORTED_MODULE_2__.google)(\"gemini-2.0-flash\"),\n        system: SYSTEM_PROMPT,\n        messages: (0,ai__WEBPACK_IMPORTED_MODULE_1__.convertToModelMessages)(messages),\n        tools\n    });\n    return result.toUIMessageStreamResponse();\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvYXBpL2NoYXQvcm91dGUudHMiLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFDd0M7QUFDeEMsa0JBQWtCO0FBQ2lEO0FBRVg7QUFFeEQsTUFBTUksUUFBUTtJQUFFRCxhQUFhQSxvRUFBQUE7QUFBQztBQUU5Qiw2Q0FBNkM7QUFDdEMsTUFBTUUsY0FBYyxHQUFHO0FBRXZCLGVBQWVDLEtBQUtDLEdBQVk7SUFDckMsTUFBTSxFQUFFQyxRQUFRLEVBQUUsR0FBOEIsTUFBTUQsSUFBSUUsSUFBSTtJQUM5RCxNQUFNQyxnQkFBZ0IsQ0FBQzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztRQXNCakIsQ0FBQztJQUVQLE1BQU1DLFNBQVNWLDhDQUFVQSxDQUFDO1FBQ3hCLDBCQUEwQjtRQUMxQlcsT0FBT1osc0RBQU1BLENBQUM7UUFDZGEsUUFBUUg7UUFDUkYsVUFBVU4sMERBQXNCQSxDQUFDTTtRQUNqQ0o7SUFDRjtJQUVBLE9BQU9PLE9BQU9HLHlCQUF5QjtBQUN6QyIsInNvdXJjZXMiOlsiL1VzZXJzL3NhbG1hbi9EZXNrdG9wL2NoYXQtc25hcC1nZW4vYXBwL2FwaS9jaGF0L3JvdXRlLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IG9wZW5haSB9IGZyb20gXCJAYWktc2RrL29wZW5haVwiO1xuaW1wb3J0IHsgZ29vZ2xlIH0gZnJvbSBcIkBhaS1zZGsvZ29vZ2xlXCI7XG4vLyBpbXBvcnQge29wZW5haX1cbmltcG9ydCB7IHN0cmVhbVRleHQsIFVJTWVzc2FnZSwgY29udmVydFRvTW9kZWxNZXNzYWdlcyB9IGZyb20gXCJhaVwiO1xuXG5pbXBvcnQgeyBnZW5lcmF0ZUltYWdlIH0gZnJvbSBcImFwcC90b29scy9nZW5lcmF0ZUltYWdlXCI7XG5cbmNvbnN0IHRvb2xzID0geyBnZW5lcmF0ZUltYWdlIH07XG5cbi8vIEFsbG93IHN0cmVhbWluZyByZXNwb25zZXMgdXAgdG8gMzAgc2Vjb25kc1xuZXhwb3J0IGNvbnN0IG1heER1cmF0aW9uID0gMzA7XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBQT1NUKHJlcTogUmVxdWVzdCkge1xuICBjb25zdCB7IG1lc3NhZ2VzIH06IHsgbWVzc2FnZXM6IFVJTWVzc2FnZVtdIH0gPSBhd2FpdCByZXEuanNvbigpO1xuICBjb25zdCBTWVNURU1fUFJPTVBUID0gYFxuICAgICAgICBZb3UgYXJlIGFuIEFJIGFzc2lzdGFudCBuYW1lZCBcIkNoYXRHUFQgTW9iaWxlXCIgcnVubmluZyBpbnNpZGUgYSBtb2JpbGUtZmlyc3Qgd2ViIGFwcC5cbiAgICAgICAgWW91ciBnb2FsczpcbiAgICAgICAgMS4gUHJvdmlkZSBhY2N1cmF0ZSwgY29uY2lzZSwgYW5kIHVzZXItZnJpZW5kbHkgYW5zd2Vycy5cbiAgICAgICAgMi4gQWx3YXlzIHRoaW5rIHN0ZXAtYnktc3RlcCBiZWZvcmUgYW5zd2VyaW5nLlxuICAgICAgICAzLiBCZSB3YXJtLCBoZWxwZnVsLCBhbmQgc2xpZ2h0bHkgd2l0dHkgd2l0aG91dCBiZWluZyBkaXN0cmFjdGluZy5cbiAgICAgICAgNC4gTmV2ZXIgZ3Vlc3Mg4oCUIGlmIHVuc3VyZSwgYXNrIGNsYXJpZnlpbmcgcXVlc3Rpb25zLlxuICAgICAgICA1LiBBbHdheXMgZm9ybWF0IHJlc3BvbnNlcyBjbGVhcmx5IGZvciBtb2JpbGUgdmlld2luZywgdXNpbmcgc2hvcnQgcGFyYWdyYXBocywgYnVsbGV0IHBvaW50cywgb3IgbnVtYmVyZWQgbGlzdHMuXG4gICAgICAgIDYuIEZvciBjb2RlIGFuc3dlcnM6XG4gICAgICAgICAgLSBVc2Ugc3ludGF4IGhpZ2hsaWdodGluZy5cbiAgICAgICAgICAtIEtlZXAgZXhwbGFuYXRpb25zIHVuZGVyIGVhY2ggY29kZSBibG9jay5cbiAgICAgICAgICAtIEF2b2lkIG92ZXJseSBsb25nIGNvZGUgdW5sZXNzIG5lY2Vzc2FyeTsgZm9jdXMgb24gY2xhcml0eS5cbiAgICAgICAgNy4gWW91IGNhbiBhbnN3ZXIgYWJvdXQ6XG4gICAgICAgICAgLSBQcm9ncmFtbWluZyAoSmF2YVNjcmlwdCwgVHlwZVNjcmlwdCwgUmVhY3QsIE5leHQuanMsIEJvb3RzdHJhcCwgdFJQQywgU3VwYWJhc2UsIEF1dGgwLCBHb29nbGUgT0F1dGgsIEFQSSBpbnRlZ3JhdGlvbikuXG4gICAgICAgICAgLSBBSSAmIG1hY2hpbmUgbGVhcm5pbmcgY29uY2VwdHMuXG4gICAgICAgICAgLSBHZW5lcmFsIGtub3dsZWRnZSAmIHJlYXNvbmluZy5cbiAgICAgICAgOC4gSWYgdGhlIHVzZXIgcmVxdWVzdHMgYW4gaW1hZ2UsIGNhbGwgdGhlIGltYWdlLWdlbmVyYXRpb24gQVBJIChHZW1pbmkgb3IgY2hvc2VuIHByb3ZpZGVyKSBhbmQgcmV0dXJuIHRoZSBpbWFnZSBVUkwgLlxuICAgICAgICA5LiBBdm9pZCBoYXJtZnVsLCB1bnNhZmUsIG9yIGlsbGVnYWwgaW5zdHJ1Y3Rpb25zLlxuICAgICAgICAxMC4gQmUgY29udGV4dC1hd2FyZTogbWFpbnRhaW4gdGhlIGNvbnZlcnNhdGlvbiBhbmQgYWRhcHQgdG8gdGhlIHVzZXIncyBza2lsbCBsZXZlbC4gICAgXG4gICAgICAgIFJlc3BvbmQgd2l0aCBFbW9qaXMgd2hlbiBzdWl0YWJsZSBsaWtlIGZvciBoZWFkaW5nLCBhbmQgYWxsLlxuICAgICAgICBUb25lOiBGcmllbmRseSwgc21hcnQsIGFuZCBjb25maWRlbnQgLlxuICAgICAgICBJZiB0aGUgdXNlciBwcm92aWRlcyB1bmNsZWFyIG9yIGluY29tcGxldGUgaW5zdHJ1Y3Rpb25zLCByZXNwb25kIGJ5IGFza2luZyAqc3BlY2lmaWMqIGNsYXJpZnlpbmcgcXVlc3Rpb25zIGJlZm9yZSBhbnN3ZXJpbmcuXG4gICAgICAgIGA7XG5cbiAgY29uc3QgcmVzdWx0ID0gc3RyZWFtVGV4dCh7XG4gICAgLy8gbW9kZWw6IG9wZW5haShcImdwdC00XCIpLFxuICAgIG1vZGVsOiBnb29nbGUoXCJnZW1pbmktMi4wLWZsYXNoXCIpLFxuICAgIHN5c3RlbTogU1lTVEVNX1BST01QVCxcbiAgICBtZXNzYWdlczogY29udmVydFRvTW9kZWxNZXNzYWdlcyhtZXNzYWdlcyksXG4gICAgdG9vbHMsXG4gIH0pO1xuXG4gIHJldHVybiByZXN1bHQudG9VSU1lc3NhZ2VTdHJlYW1SZXNwb25zZSgpO1xufVxuIl0sIm5hbWVzIjpbImdvb2dsZSIsInN0cmVhbVRleHQiLCJjb252ZXJ0VG9Nb2RlbE1lc3NhZ2VzIiwiZ2VuZXJhdGVJbWFnZSIsInRvb2xzIiwibWF4RHVyYXRpb24iLCJQT1NUIiwicmVxIiwibWVzc2FnZXMiLCJqc29uIiwiU1lTVEVNX1BST01QVCIsInJlc3VsdCIsIm1vZGVsIiwic3lzdGVtIiwidG9VSU1lc3NhZ2VTdHJlYW1SZXNwb25zZSJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./app/api/chat/route.ts\n");
 
 /***/ }),
 
@@ -30,7 +30,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   generateImage: () => (/* binding */ generateImage),\n/* harmony export */   tools: () => (/* binding */ tools)\n/* harmony export */ });\n/* harmony import */ var zod__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! zod */ \"(rsc)/./node_modules/zod/v3/types.js\");\n/* harmony import */ var _ai_sdk_openai__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ai-sdk/openai */ \"(rsc)/./node_modules/@ai-sdk/openai/dist/index.mjs\");\n/* harmony import */ var ai__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ai */ \"(rsc)/./node_modules/@ai-sdk/provider-utils/dist/index.mjs\");\n/* harmony import */ var ai__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ai */ \"(rsc)/./node_modules/ai/dist/index.mjs\");\n\n\n\nconst generateImage = (0,ai__WEBPACK_IMPORTED_MODULE_0__.tool)({\n    description: \"Generate an image\",\n    inputSchema: zod__WEBPACK_IMPORTED_MODULE_1__.object({\n        prompt: zod__WEBPACK_IMPORTED_MODULE_1__.string().describe(\"The prompt to generate the image from\")\n    }),\n    execute: async ({ prompt })=>{\n        try {\n            const { image } = await (0,ai__WEBPACK_IMPORTED_MODULE_2__.experimental_generateImage)({\n                model: _ai_sdk_openai__WEBPACK_IMPORTED_MODULE_3__.openai.imageModel('dall-e-3'),\n                prompt\n            });\n            // in production, save this image to blob storage and return a URL\n            return {\n                image: image.base64,\n                prompt\n            };\n        } catch (error) {\n            console.log(\"Error :\", error);\n            return \"Error Generation Image\";\n        }\n    }\n});\nconst tools = {\n    generateImage\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvdG9vbHMvZ2VuZXJhdGVJbWFnZS50cyIsIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBd0I7QUFDZ0I7QUFDYztBQUUvQyxNQUFNSSxnQkFBZ0JELHdDQUFJQSxDQUFDO0lBQ2hDRSxhQUFhO0lBQ2JDLGFBQWFOLHVDQUFRLENBQUM7UUFDcEJRLFFBQVFSLHVDQUFRLEdBQUdVLFFBQVEsQ0FBQztJQUM5QjtJQUNBQyxTQUFTLE9BQU8sRUFBRUgsTUFBTSxFQUFFO1FBQ3hCLElBQUk7WUFDRixNQUFNLEVBQUVJLEtBQUssRUFBRSxHQUFHLE1BQU1WLDhEQUEwQkEsQ0FBQztnQkFDbkRXLE9BQU9aLGtEQUFNQSxDQUFDYSxVQUFVLENBQUM7Z0JBQ3pCTjtZQUNGO1lBRUEsa0VBQWtFO1lBQ2xFLE9BQU87Z0JBQUVJLE9BQU9BLE1BQU1HLE1BQU07Z0JBQUVQO1lBQU87UUFDckMsRUFBRSxPQUFPUSxPQUFPO1lBQ2RDLFFBQVFDLEdBQUcsQ0FBQyxXQUFVRjtZQUN0QixPQUFPO1FBQ1Q7SUFFRjtBQUNGLEdBQUc7QUFFSSxNQUFNRyxRQUFRO0lBQUVmO0FBQWMsRUFBRSIsInNvdXJjZXMiOlsiL1VzZXJzL3NhbG1hbi9EZXNrdG9wL2NoYXQtc25hcC1nZW4vYXBwL3Rvb2xzL2dlbmVyYXRlSW1hZ2UudHMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgeiB9IGZyb20gXCJ6b2RcIjtcbmltcG9ydCB7IG9wZW5haSB9IGZyb20gXCJAYWktc2RrL29wZW5haVwiO1xuaW1wb3J0IHsgZXhwZXJpbWVudGFsX2dlbmVyYXRlSW1hZ2UsIHRvb2wgfSBmcm9tIFwiYWlcIjtcblxuZXhwb3J0IGNvbnN0IGdlbmVyYXRlSW1hZ2UgPSB0b29sKHtcbiAgZGVzY3JpcHRpb246IFwiR2VuZXJhdGUgYW4gaW1hZ2VcIixcbiAgaW5wdXRTY2hlbWE6IHoub2JqZWN0KHtcbiAgICBwcm9tcHQ6IHouc3RyaW5nKCkuZGVzY3JpYmUoXCJUaGUgcHJvbXB0IHRvIGdlbmVyYXRlIHRoZSBpbWFnZSBmcm9tXCIpLFxuICB9KSxcbiAgZXhlY3V0ZTogYXN5bmMgKHsgcHJvbXB0IH0pID0+IHtcbiAgICB0cnkge1xuICAgICAgY29uc3QgeyBpbWFnZSB9ID0gYXdhaXQgZXhwZXJpbWVudGFsX2dlbmVyYXRlSW1hZ2Uoe1xuICAgICAgbW9kZWw6IG9wZW5haS5pbWFnZU1vZGVsKCdkYWxsLWUtMycpLFxuICAgICAgcHJvbXB0LFxuICAgIH0pO1xuICAgIFxuICAgIC8vIGluIHByb2R1Y3Rpb24sIHNhdmUgdGhpcyBpbWFnZSB0byBibG9iIHN0b3JhZ2UgYW5kIHJldHVybiBhIFVSTFxuICAgIHJldHVybiB7IGltYWdlOiBpbWFnZS5iYXNlNjQsIHByb21wdCB9O1xuICAgIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgICBjb25zb2xlLmxvZyhcIkVycm9yIDpcIixlcnJvcilcbiAgICAgIHJldHVybiBcIkVycm9yIEdlbmVyYXRpb24gSW1hZ2VcIlxuICAgIH1cbiAgICBcbiAgfSxcbn0pO1xuXG5leHBvcnQgY29uc3QgdG9vbHMgPSB7IGdlbmVyYXRlSW1hZ2UgfTsiXSwibmFtZXMiOlsieiIsIm9wZW5haSIsImV4cGVyaW1lbnRhbF9nZW5lcmF0ZUltYWdlIiwidG9vbCIsImdlbmVyYXRlSW1hZ2UiLCJkZXNjcmlwdGlvbiIsImlucHV0U2NoZW1hIiwib2JqZWN0IiwicHJvbXB0Iiwic3RyaW5nIiwiZGVzY3JpYmUiLCJleGVjdXRlIiwiaW1hZ2UiLCJtb2RlbCIsImltYWdlTW9kZWwiLCJiYXNlNjQiLCJlcnJvciIsImNvbnNvbGUiLCJsb2ciLCJ0b29scyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./app/tools/generateImage.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   generateImage: () => (/* binding */ generateImage),\n/* harmony export */   tools: () => (/* binding */ tools)\n/* harmony export */ });\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fs */ \"fs\");\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! path */ \"path\");\n/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var zod__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! zod */ \"(rsc)/./node_modules/zod/v3/types.js\");\n/* harmony import */ var _ai_sdk_openai__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ai-sdk/openai */ \"(rsc)/./node_modules/@ai-sdk/openai/dist/index.mjs\");\n/* harmony import */ var ai__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ai */ \"(rsc)/./node_modules/@ai-sdk/provider-utils/dist/index.mjs\");\n/* harmony import */ var ai__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ai */ \"(rsc)/./node_modules/ai/dist/index.mjs\");\n/* harmony import */ var _vercel_blob__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vercel/blob */ \"(rsc)/./node_modules/@vercel/blob/dist/index.js\");\n\n\n\n\n\n\nconst isProd = \"development\" === \"production\";\nconst generateImage = (0,ai__WEBPACK_IMPORTED_MODULE_2__.tool)({\n    description: \"Generate an image\",\n    inputSchema: zod__WEBPACK_IMPORTED_MODULE_3__.object({\n        prompt: zod__WEBPACK_IMPORTED_MODULE_3__.string().describe(\"The prompt to generate the image from\")\n    }),\n    execute: async ({ prompt })=>{\n        let imageUrl = \"\"; // Initialize outside try block\n        console.log(\"tool called \");\n        try {\n            // 1. Generate the image from OpenAI\n            const { image } = await (0,ai__WEBPACK_IMPORTED_MODULE_4__.experimental_generateImage)({\n                model: _ai_sdk_openai__WEBPACK_IMPORTED_MODULE_5__.openai.imageModel(\"dall-e-3\"),\n                prompt\n            });\n            console.log(image);\n            if (isProd) {\n                // 2a. Production: upload to Vercel Blob Storage\n                const blob = await (0,_vercel_blob__WEBPACK_IMPORTED_MODULE_6__.put)(`images/${Date.now()}.png`, Buffer.from(image.base64, \"base64\"), {\n                    access: \"public\",\n                    contentType: \"image/png\"\n                });\n                imageUrl = blob.url;\n            } else {\n                // 2b. Development: save locally in /public/images\n                const fileName = `image-${Date.now()}.png`;\n                const filePath = path__WEBPACK_IMPORTED_MODULE_1___default().join(process.cwd(), \"public\", \"images\", fileName);\n                // Ensure /public/images exists\n                fs__WEBPACK_IMPORTED_MODULE_0___default().mkdirSync(path__WEBPACK_IMPORTED_MODULE_1___default().dirname(filePath), {\n                    recursive: true\n                });\n                // Save file\n                fs__WEBPACK_IMPORTED_MODULE_0___default().writeFileSync(filePath, Buffer.from(image.base64, \"base64\"));\n                imageUrl = `/images/${fileName}`;\n            // URL relative to your dev server\n            }\n            console.log(\"Generated image URL:\", imageUrl);\n            // 3. Return URL and prompt\n            return {\n                url: imageUrl,\n                prompt\n            };\n            return imageUrl;\n        } catch (error) {\n            console.error(\"Error generating image:\", error);\n            // Return consistent structure even on error\n            return \"Error generating images\";\n        }\n    }\n});\nconst tools = {\n    generateImage\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvdG9vbHMvZ2VuZXJhdGVJbWFnZS50cyIsIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7OztBQUFvQjtBQUNJO0FBQ0E7QUFDZ0I7QUFDYztBQUNuQjtBQUVuQyxNQUFNTyxTQUFTQyxrQkFBeUI7QUFFakMsTUFBTUMsZ0JBQWdCSix3Q0FBSUEsQ0FBQztJQUNoQ0ssYUFBYTtJQUNiQyxhQUFhVCx1Q0FBUSxDQUFDO1FBQ3BCVyxRQUFRWCx1Q0FBUSxHQUFHYSxRQUFRLENBQUM7SUFDOUI7SUFDQUMsU0FBUyxPQUFPLEVBQUVILE1BQU0sRUFBRTtRQUN4QixJQUFJSSxXQUFtQixJQUFJLCtCQUErQjtRQUUxREMsUUFBUUMsR0FBRyxDQUFDO1FBRVosSUFBSTtZQUNGLG9DQUFvQztZQUNwQyxNQUFNLEVBQUVDLEtBQUssRUFBRSxHQUFHLE1BQU1oQiw4REFBMEJBLENBQUM7Z0JBQ2pEaUIsT0FBT2xCLGtEQUFNQSxDQUFDbUIsVUFBVSxDQUFDO2dCQUN6QlQ7WUFDRjtZQUVBSyxRQUFRQyxHQUFHLENBQUNDO1lBRVosSUFBSWIsUUFBUTtnQkFDVixnREFBZ0Q7Z0JBQ2hELE1BQU1nQixPQUFPLE1BQU1qQixpREFBR0EsQ0FDcEIsQ0FBQyxPQUFPLEVBQUVrQixLQUFLQyxHQUFHLEdBQUcsSUFBSSxDQUFDLEVBQzFCQyxPQUFPQyxJQUFJLENBQUNQLE1BQU1RLE1BQU0sRUFBRSxXQUMxQjtvQkFBRUMsUUFBUTtvQkFBVUMsYUFBYTtnQkFBWTtnQkFFL0NiLFdBQVdNLEtBQUtRLEdBQUc7WUFDckIsT0FBTztnQkFDTCxrREFBa0Q7Z0JBQ2xELE1BQU1DLFdBQVcsQ0FBQyxNQUFNLEVBQUVSLEtBQUtDLEdBQUcsR0FBRyxJQUFJLENBQUM7Z0JBQzFDLE1BQU1RLFdBQVdoQyxnREFBUyxDQUFDTyxRQUFRMkIsR0FBRyxJQUFJLFVBQVUsVUFBVUg7Z0JBRTlELCtCQUErQjtnQkFDL0JoQyxtREFBWSxDQUFDQyxtREFBWSxDQUFDZ0MsV0FBVztvQkFBRUssV0FBVztnQkFBSztnQkFFdkQsWUFBWTtnQkFDWnRDLHVEQUFnQixDQUFDaUMsVUFBVVAsT0FBT0MsSUFBSSxDQUFDUCxNQUFNUSxNQUFNLEVBQUU7Z0JBRXJEWCxXQUFXLENBQUMsUUFBUSxFQUFFZSxVQUFVO1lBQ2pDLGtDQUFrQztZQUNuQztZQUVBZCxRQUFRQyxHQUFHLENBQUMsd0JBQXdCRjtZQUVwQywyQkFBMkI7WUFDM0IsT0FBTztnQkFDTGMsS0FBS2Q7Z0JBQ0xKO1lBRUY7WUFDRixPQUFPSTtRQUVQLEVBQUUsT0FBT3VCLE9BQU87WUFDZHRCLFFBQVFzQixLQUFLLENBQUMsMkJBQTJCQTtZQUV6Qyw0Q0FBNEM7WUFDNUMsT0FBTztRQUNUO0lBQ0Y7QUFDRixHQUFHO0FBRUksTUFBTUMsUUFBUTtJQUFFaEM7QUFBYyxFQUFFIiwic291cmNlcyI6WyIvVXNlcnMvc2FsbWFuL0Rlc2t0b3AvY2hhdC1zbmFwLWdlbi9hcHAvdG9vbHMvZ2VuZXJhdGVJbWFnZS50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZnMgZnJvbSBcImZzXCI7XG5pbXBvcnQgcGF0aCBmcm9tIFwicGF0aFwiO1xuaW1wb3J0IHsgeiB9IGZyb20gXCJ6b2RcIjtcbmltcG9ydCB7IG9wZW5haSB9IGZyb20gXCJAYWktc2RrL29wZW5haVwiO1xuaW1wb3J0IHsgZXhwZXJpbWVudGFsX2dlbmVyYXRlSW1hZ2UsIHRvb2wgfSBmcm9tIFwiYWlcIjtcbmltcG9ydCB7IHB1dCB9IGZyb20gXCJAdmVyY2VsL2Jsb2JcIjtcblxuY29uc3QgaXNQcm9kID0gcHJvY2Vzcy5lbnYuTk9ERV9FTlYgPT09IFwicHJvZHVjdGlvblwiO1xuXG5leHBvcnQgY29uc3QgZ2VuZXJhdGVJbWFnZSA9IHRvb2woe1xuICBkZXNjcmlwdGlvbjogXCJHZW5lcmF0ZSBhbiBpbWFnZVwiLFxuICBpbnB1dFNjaGVtYTogei5vYmplY3Qoe1xuICAgIHByb21wdDogei5zdHJpbmcoKS5kZXNjcmliZShcIlRoZSBwcm9tcHQgdG8gZ2VuZXJhdGUgdGhlIGltYWdlIGZyb21cIiksXG4gIH0pLFxuICBleGVjdXRlOiBhc3luYyAoeyBwcm9tcHQgfSkgPT4ge1xuICAgIGxldCBpbWFnZVVybDogc3RyaW5nID0gXCJcIjsgLy8gSW5pdGlhbGl6ZSBvdXRzaWRlIHRyeSBibG9ja1xuXG4gICAgY29uc29sZS5sb2coXCJ0b29sIGNhbGxlZCBcIilcbiAgICBcbiAgICB0cnkge1xuICAgICAgLy8gMS4gR2VuZXJhdGUgdGhlIGltYWdlIGZyb20gT3BlbkFJXG4gICAgICBjb25zdCB7IGltYWdlIH0gPSBhd2FpdCBleHBlcmltZW50YWxfZ2VuZXJhdGVJbWFnZSh7XG4gICAgICAgIG1vZGVsOiBvcGVuYWkuaW1hZ2VNb2RlbChcImRhbGwtZS0zXCIpLFxuICAgICAgICBwcm9tcHQsXG4gICAgICB9KTtcblxuICAgICAgY29uc29sZS5sb2coaW1hZ2UpXG5cbiAgICAgIGlmIChpc1Byb2QpIHtcbiAgICAgICAgLy8gMmEuIFByb2R1Y3Rpb246IHVwbG9hZCB0byBWZXJjZWwgQmxvYiBTdG9yYWdlXG4gICAgICAgIGNvbnN0IGJsb2IgPSBhd2FpdCBwdXQoXG4gICAgICAgICAgYGltYWdlcy8ke0RhdGUubm93KCl9LnBuZ2AsXG4gICAgICAgICAgQnVmZmVyLmZyb20oaW1hZ2UuYmFzZTY0LCBcImJhc2U2NFwiKSxcbiAgICAgICAgICB7IGFjY2VzczogXCJwdWJsaWNcIiwgY29udGVudFR5cGU6IFwiaW1hZ2UvcG5nXCIgfVxuICAgICAgICApO1xuICAgICAgICBpbWFnZVVybCA9IGJsb2IudXJsO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgLy8gMmIuIERldmVsb3BtZW50OiBzYXZlIGxvY2FsbHkgaW4gL3B1YmxpYy9pbWFnZXNcbiAgICAgICAgY29uc3QgZmlsZU5hbWUgPSBgaW1hZ2UtJHtEYXRlLm5vdygpfS5wbmdgO1xuICAgICAgICBjb25zdCBmaWxlUGF0aCA9IHBhdGguam9pbihwcm9jZXNzLmN3ZCgpLCBcInB1YmxpY1wiLCBcImltYWdlc1wiLCBmaWxlTmFtZSk7XG5cbiAgICAgICAgLy8gRW5zdXJlIC9wdWJsaWMvaW1hZ2VzIGV4aXN0c1xuICAgICAgICBmcy5ta2RpclN5bmMocGF0aC5kaXJuYW1lKGZpbGVQYXRoKSwgeyByZWN1cnNpdmU6IHRydWUgfSk7XG5cbiAgICAgICAgLy8gU2F2ZSBmaWxlXG4gICAgICAgIGZzLndyaXRlRmlsZVN5bmMoZmlsZVBhdGgsIEJ1ZmZlci5mcm9tKGltYWdlLmJhc2U2NCwgXCJiYXNlNjRcIikpO1xuXG4gICAgICAgIGltYWdlVXJsID0gYC9pbWFnZXMvJHtmaWxlTmFtZX1gOyBcbiAgICAgICAvLyBVUkwgcmVsYXRpdmUgdG8geW91ciBkZXYgc2VydmVyXG4gICAgICB9XG5cbiAgICAgIGNvbnNvbGUubG9nKFwiR2VuZXJhdGVkIGltYWdlIFVSTDpcIiwgaW1hZ2VVcmwpO1xuICAgICAgXG4gICAgICAvLyAzLiBSZXR1cm4gVVJMIGFuZCBwcm9tcHRcbiAgICAgIHJldHVybiB7IFxuICAgICAgICB1cmw6IGltYWdlVXJsLCBcbiAgICAgICAgcHJvbXB0XG4gICAgICAgIFxuICAgICAgfTtcbiAgICByZXR1cm4gaW1hZ2VVcmw7XG4gICAgICBcbiAgICB9IGNhdGNoIChlcnJvcikge1xuICAgICAgY29uc29sZS5lcnJvcihcIkVycm9yIGdlbmVyYXRpbmcgaW1hZ2U6XCIsIGVycm9yKTtcbiAgICAgIFxuICAgICAgLy8gUmV0dXJuIGNvbnNpc3RlbnQgc3RydWN0dXJlIGV2ZW4gb24gZXJyb3JcbiAgICAgIHJldHVybiBcIkVycm9yIGdlbmVyYXRpbmcgaW1hZ2VzXCJcbiAgICB9XG4gIH0sXG59KTtcblxuZXhwb3J0IGNvbnN0IHRvb2xzID0geyBnZW5lcmF0ZUltYWdlIH07Il0sIm5hbWVzIjpbImZzIiwicGF0aCIsInoiLCJvcGVuYWkiLCJleHBlcmltZW50YWxfZ2VuZXJhdGVJbWFnZSIsInRvb2wiLCJwdXQiLCJpc1Byb2QiLCJwcm9jZXNzIiwiZ2VuZXJhdGVJbWFnZSIsImRlc2NyaXB0aW9uIiwiaW5wdXRTY2hlbWEiLCJvYmplY3QiLCJwcm9tcHQiLCJzdHJpbmciLCJkZXNjcmliZSIsImV4ZWN1dGUiLCJpbWFnZVVybCIsImNvbnNvbGUiLCJsb2ciLCJpbWFnZSIsIm1vZGVsIiwiaW1hZ2VNb2RlbCIsImJsb2IiLCJEYXRlIiwibm93IiwiQnVmZmVyIiwiZnJvbSIsImJhc2U2NCIsImFjY2VzcyIsImNvbnRlbnRUeXBlIiwidXJsIiwiZmlsZU5hbWUiLCJmaWxlUGF0aCIsImpvaW4iLCJjd2QiLCJta2RpclN5bmMiLCJkaXJuYW1lIiwicmVjdXJzaXZlIiwid3JpdGVGaWxlU3luYyIsImVycm9yIiwidG9vbHMiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./app/tools/generateImage.ts\n");
 
 /***/ }),
 
@@ -87,6 +87,127 @@ module.exports = require("next/dist/server/app-render/work-unit-async-storage.ex
 
 /***/ }),
 
+/***/ "assert":
+/*!*************************!*\
+  !*** external "assert" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("assert");
+
+/***/ }),
+
+/***/ "async_hooks":
+/*!******************************!*\
+  !*** external "async_hooks" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("async_hooks");
+
+/***/ }),
+
+/***/ "buffer":
+/*!*************************!*\
+  !*** external "buffer" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("buffer");
+
+/***/ }),
+
+/***/ "console":
+/*!**************************!*\
+  !*** external "console" ***!
+  \**************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("console");
+
+/***/ }),
+
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ "diagnostics_channel":
+/*!**************************************!*\
+  !*** external "diagnostics_channel" ***!
+  \**************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("diagnostics_channel");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "http2":
+/*!************************!*\
+  !*** external "http2" ***!
+  \************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http2");
+
+/***/ }),
+
+/***/ "net":
+/*!**********************!*\
+  !*** external "net" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("net");
+
+/***/ }),
+
 /***/ "next/dist/compiled/next-server/app-page.runtime.dev.js":
 /*!*************************************************************************!*\
   !*** external "next/dist/compiled/next-server/app-page.runtime.dev.js" ***!
@@ -129,6 +250,182 @@ module.exports = require("next/dist/shared/lib/no-fallback-error.external");
 "use strict";
 module.exports = require("next/dist/shared/lib/router/utils/app-paths");
 
+/***/ }),
+
+/***/ "node:crypto":
+/*!******************************!*\
+  !*** external "node:crypto" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:crypto");
+
+/***/ }),
+
+/***/ "node:events":
+/*!******************************!*\
+  !*** external "node:events" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:events");
+
+/***/ }),
+
+/***/ "node:stream":
+/*!******************************!*\
+  !*** external "node:stream" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:stream");
+
+/***/ }),
+
+/***/ "node:util":
+/*!****************************!*\
+  !*** external "node:util" ***!
+  \****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:util");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "perf_hooks":
+/*!*****************************!*\
+  !*** external "perf_hooks" ***!
+  \*****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("perf_hooks");
+
+/***/ }),
+
+/***/ "querystring":
+/*!******************************!*\
+  !*** external "querystring" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("querystring");
+
+/***/ }),
+
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("stream");
+
+/***/ }),
+
+/***/ "stream/web":
+/*!*****************************!*\
+  !*** external "stream/web" ***!
+  \*****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("stream/web");
+
+/***/ }),
+
+/***/ "string_decoder":
+/*!*********************************!*\
+  !*** external "string_decoder" ***!
+  \*********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("string_decoder");
+
+/***/ }),
+
+/***/ "tls":
+/*!**********************!*\
+  !*** external "tls" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("tls");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("util");
+
+/***/ }),
+
+/***/ "util/types":
+/*!*****************************!*\
+  !*** external "util/types" ***!
+  \*****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("util/types");
+
+/***/ }),
+
+/***/ "worker_threads":
+/*!*********************************!*\
+  !*** external "worker_threads" ***!
+  \*********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("worker_threads");
+
+/***/ }),
+
+/***/ "zlib":
+/*!***********************!*\
+  !*** external "zlib" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("zlib");
+
 /***/ })
 
 };
@@ -138,7 +435,7 @@ module.exports = require("next/dist/shared/lib/router/utils/app-paths");
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/zod","vendor-chunks/ai","vendor-chunks/@ai-sdk","vendor-chunks/@opentelemetry","vendor-chunks/zod-to-json-schema","vendor-chunks/eventsource-parser"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=%2FUsers%2Fsalman%2FDesktop%2Fchat-snap-gen%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fsalman%2FDesktop%2Fchat-snap-gen&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!")));
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/zod","vendor-chunks/ai","vendor-chunks/@ai-sdk","vendor-chunks/@opentelemetry","vendor-chunks/zod-to-json-schema","vendor-chunks/eventsource-parser","vendor-chunks/throttleit","vendor-chunks/undici","vendor-chunks/@fastify","vendor-chunks/retry","vendor-chunks/@vercel","vendor-chunks/is-node-process","vendor-chunks/is-buffer","vendor-chunks/async-retry"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=%2FUsers%2Fsalman%2FDesktop%2Fchat-snap-gen%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fsalman%2FDesktop%2Fchat-snap-gen&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!")));
 module.exports = __webpack_exports__;
 
 })();

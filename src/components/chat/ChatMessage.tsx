@@ -102,7 +102,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                 default:
                   // Handle tool parts (like 'tool-generateImage')
                   if (part.type === "tool-generateImage") {
-                    const { state, toolCallId, input, output } = part;
+                    const { state,  input, output } = part;
                     
                     if (state === "input-available") {
                       return (
@@ -120,7 +120,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                       );
                     }
                     
-                    if (state === "output-available" && output?.image) {
+                    if (state === "output-available" && output?.url) {
                       return (
                         <div key={`${message.id}-tool-${index}`} className="mt-3">
                           <div className="mb-2">
@@ -130,7 +130,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                           </div>
                           <div className="relative rounded-lg overflow-hidden">
                             <Image
-                              src={`data:image/png;base64,${output.image}`}
+                              src={output.url}
                               alt={input?.prompt || "Generated image"}
                               width={400}
                               height={400}

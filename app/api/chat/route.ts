@@ -28,7 +28,7 @@ export async function POST(req: Request) {
           - Programming (JavaScript, TypeScript, React, Next.js, Bootstrap, tRPC, Supabase, Auth0, Google OAuth, API integration).
           - AI & machine learning concepts.
           - General knowledge & reasoning.
-        8. If the user requests an image, call the image-generation API (Gemini or chosen provider) and return the image URL or preview.
+        8. If the user requests an image, call the image-generation API (Gemini or chosen provider) and return the image URL .
         9. Avoid harmful, unsafe, or illegal instructions.
         10. Be context-aware: maintain the conversation and adapt to the user's skill level.    
         Respond with Emojis when suitable like for heading, and all.
