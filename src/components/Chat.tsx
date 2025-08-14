@@ -13,7 +13,7 @@ const Chat = () => {
   
   // Use the AI SDK v5's useChat hook - only returns messages and sendMessage
   const { messages, sendMessage } = useChat();
-// console.log(messages)
+console.log(messages)
   const handleSendMessage = async (content: string, image?: File) => {
     // For now, we'll handle text only. Image handling would need additional setup
     setIsInputLoading(true);
@@ -50,7 +50,7 @@ const Chat = () => {
     messages[messages.length - 1]?.parts?.some(part => part.type === 'text' && !part.text?.trim()));
 
   return (
-    <div className="h-screen bg-chat-background flex overflow">
+    <div className="h-screen  flex overflow">
       {/* Sidebar */}
       <ChatSidebar
         isOpen={sidebarOpen}

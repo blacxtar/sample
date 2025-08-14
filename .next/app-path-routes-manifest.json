@@ -1,6 +1,0 @@
-{
-  "/api/chat/route": "/api/chat",
-  "/page": "/",
-  "/_not-found/page": "/_not-found",
-  "/auth/page": "/auth"
-}

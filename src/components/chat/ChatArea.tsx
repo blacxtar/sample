@@ -80,14 +80,21 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
             </div>
           ) : (
             <>
-              {messages.map((message, index) => (
-                <ChatMessage
-                  // topRef={messagesEndRef}
-                  key={message.id}
-                  message={message}
-                  isLatest={index === messages.length - 1}
-                />
-              ))}
+              {messages.map((message, index) => {
+                const isLatest = index === messages.length - 1;
+
+
+
+                return isLoading && isLatest && message.role == "assistant" ? (
+                  <TypingIndicator key={`typing-${message.id}`} />
+                ) : (
+                  <ChatMessage
+                    key={message.id}
+                    message={message}
+                    isLatest={isLatest}
+                  />
+                );
+              })}
             </>
           )}
         </div>

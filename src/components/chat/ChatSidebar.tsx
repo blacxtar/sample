@@ -101,9 +101,9 @@ const ChatSidebar = ({
       {/* Sidebar */}
       <div
         className={`
-        fixed top-0 left-0 h-full overflow-auto w-64 md:w-[18%] z-50 transform transition-transform duration-300 ease-in-out 
+        fixed top-0 left-0 h-full overflow-auto w-[50%] md:w-[28%] lg:w-[20%] z-50 transform transition-transform duration-300 ease-in-out 
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
-        md:translate-x-0 md:relative md:w-80
+        md:translate-x-0 md:relative 
       `}
       >
         <div className="h-screen bg-chat-sidebar border-r border-chat-border flex flex-col">

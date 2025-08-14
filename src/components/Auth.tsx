@@ -33,7 +33,7 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `https://chat-snap-gen-9pqr.vercel.app/`,
+          redirectTo: `http:localhost:4000`
         },
       });
 
