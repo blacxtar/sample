@@ -113,7 +113,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                           <div className="flex items-center space-x-2">
                             <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
                             <span className="text-sm text-blue-700 dark:text-blue-300">
-                              Generating image: "{input?.prompt || 'Creating your image...'}"
+                              Generating image: {input?.prompt || 'Creating your image...'}
                             </span>
                           </div>
                         </div>
@@ -125,7 +125,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                         <div key={`${message.id}-tool-${index}`} className="mt-3">
                           <div className="mb-2">
                             <span className="text-xs text-muted-foreground">
-                              Generated: "{input?.prompt}"
+                              Generated: {input?.prompt}
                             </span>
                           </div>
                           <div className="relative rounded-lg overflow-hidden">
@@ -152,7 +152,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                         >
                           <div className="flex items-center space-x-2">
                             <span className="text-sm text-red-700 dark:text-red-300">
-                              ❌ Failed to generate image: "{input?.prompt}"
+                              ❌ Failed to generate image: {input?.prompt}
                             </span>
                           </div>
                         </div>
