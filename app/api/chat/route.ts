@@ -1,38 +1,9 @@
 import { openai } from "@ai-sdk/openai";
 import { google } from "@ai-sdk/google";
 // import {openai}
-import {
-  streamText,
-  UIMessage,
-  convertToModelMessages,
-  tool,
-  experimental_generateImage,
-} from "ai";
+import { streamText, UIMessage, convertToModelMessages } from "ai";
 
-import { z } from "zod";
-
-export const generateImage = tool({
-  description: "Generate an image",
-  inputSchema: z.object({
-    prompt: z.string().describe("The prompt to generate the image from"),
-  }),
-  execute: async ({ prompt }) => {
-    try {
-      const { image } = await experimental_generateImage({
-      model: openai.imageModel('dall-e-3'),
-      // model:google.imageModel('gemini-2.0-flash'),
-      prompt,
-    });
-    
-    // in production, save this image to blob storage and return a URL
-    return { image: image.base64, prompt };
-    } catch (error) {
-      console.log("Error :",error)
-      return "Error Generation Image"
-    }
-    
-  },
-});
+import { generateImage } from "app/tools/generateImage";
 
 const tools = { generateImage };
 
@@ -67,7 +38,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     // model: openai("gpt-4"),
-    model:google('gemini-2.0-flash'),
+    model: google("gemini-2.0-flash"),
     system: SYSTEM_PROMPT,
     messages: convertToModelMessages(messages),
     tools,
