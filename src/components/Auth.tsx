@@ -15,7 +15,6 @@ const Auth = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is already logged in
     const checkAuth = async () => {
       const {
         data: { session },
@@ -28,12 +27,13 @@ const Auth = () => {
   }, [router]);
 
   const handleGoogleAuth = async () => {
+    console.log("handle google auth")
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `http:localhost:4000`
+          redirectTo: `${window.location.origin}/`
         },
       });
 

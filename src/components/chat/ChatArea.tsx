@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import ChatMessage from "./ChatMessage";
 import TypingIndicator from "./TypingIndicator";
 import Image from "next/image";
+import { trpc } from "@/utils/trpc";
 
 // AI SDK v5 message structure
 interface UIMessage {
@@ -25,6 +26,10 @@ interface ChatAreaProps {
 
 const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const {data}=  trpc.test.hello.useQuery()
+
+  const startingName = data?.message.split(" ")[0]
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,6 +54,7 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
               <Menu className="w-5 h-5" />
             </Button>
           </div>
+         
           <h1 className="text-lg font-normal">ChatGPT</h1>
           <div className="flex space-x-2">
             <div className="hidden sm:block px-3 py-1 bg-primary text-foreground-primary text-sm rounded-full border border-primary/20">
@@ -63,16 +69,18 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
         <div className="max-w-4xl mx-auto px-4 py-6">
           {messages.length === 0 ? (
             <div className="text-center py-12">
-              <div className="w-9 h-9 bg-white rounded-lg flex mb-2 items-center justify-center mx-auto">
+              <div className="w-9 h-9  rounded-lg flex mb-3 items-center justify-center mx-auto">
                 <Image
-                  src="/chatgpt-logo.jpg"
+                  src="/chat-gpt-logo.png"
+                  className="invert-black-to-white"
                   alt="gpt-logo"
                   width={32}
                   height={32}
                 />
               </div>
-              <h2 className="text-2xl font-semibold mb-2">
-                What can I help with?
+            
+              <h2 className="text-xl font-light mb-2">
+                How can I help you, <span className="text-blue-300">{startingName}</span> ?
               </h2>
               <p className="text-muted-foreground">
                 Start a conversation or try one of the suggestions below

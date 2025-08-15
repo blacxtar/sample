@@ -1,19 +1,23 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatArea from "@/components/chat/ChatArea";
 import ChatInput from "@/components/chat/ChatInput";
-import { useChat } from '@ai-sdk/react';
+import { useChat } from "@ai-sdk/react";
+import { trpc } from "@/utils/trpc";
 
 const Chat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentChatId, setCurrentChatId] = useState<string>();
   const [isInputLoading, setIsInputLoading] = useState(false);
+
   
-  // Use the AI SDK v5's useChat hook - only returns messages and sendMessage
+
   const { messages, sendMessage } = useChat();
-console.log(messages)
+
+  
+
   const handleSendMessage = async (content: string, image?: File) => {
     // For now, we'll handle text only. Image handling would need additional setup
     setIsInputLoading(true);
@@ -45,9 +49,13 @@ console.log(messages)
   };
 
   // Check if the last message is from assistant and still being generated
-  const isLoading = isInputLoading || (messages.length > 0 && 
-    messages[messages.length - 1]?.role === 'assistant' && 
-    messages[messages.length - 1]?.parts?.some(part => part.type === 'text' && !part.text?.trim()));
+  const isLoading =
+    isInputLoading ||
+    (messages.length > 0 &&
+      messages[messages.length - 1]?.role === "assistant" &&
+      messages[messages.length - 1]?.parts?.some(
+        (part) => part.type === "text" && !part.text?.trim()
+      ));
 
   return (
     <div className="h-screen  flex overflow">
@@ -62,12 +70,13 @@ console.log(messages)
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0">
+        
         <ChatArea
           messages={messages} // Pass AI SDK messages directly
           isLoading={isLoading}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         />
-                
+
         <ChatInput
           onSendMessage={handleSendMessage}
           isLoading={isLoading}

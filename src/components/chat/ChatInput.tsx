@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Send, Paperclip, Mic, Square } from "lucide-react";
+import { Send, Paperclip, Mic, Square, ArrowUp } from "lucide-react";
 
 interface ChatInputProps {
   onSendMessage: (message: string, image?: File) => void;
@@ -81,7 +81,7 @@ const ChatInput = ({
         <form onSubmit={handleSubmit} className="relative">
           <div className="flex  items-end space-x-2">
             {/* Input Area */}
-            <div className="w-full  mx-auto ">
+            <div className="w-[97%]  mx-auto ">
               {/* Attachment Button */}
               <div className="relative ">
                 <Button
@@ -89,7 +89,7 @@ const ChatInput = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => fileInputRef.current?.click()}
-                  className="left-1 h-12 w-12 p-0 absolute rounded-full text-muted-foreground hover:text-foreground flex-shrink-0"
+                  className="left-1 h-12 w-12 p-0 absolute rounded-full text-foreground hover:bg-gray-600  flex-shrink-0"
                 >
                   <Paperclip className="w-5 h-5" />
                 </Button>
@@ -100,7 +100,7 @@ const ChatInput = ({
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask anything "
-                  className="chat-input pl-12 min-h-[48px] max-h-[120px] w-full resize-none overflow-y-auto"
+                  className="chat-input pl-12 min-h-[48px] max-h-[120px] w-full resize-none overflow-y-auto focus:outline-none  "
                   rows={1}
                   disabled={isLoading}
                 />
@@ -120,9 +120,9 @@ const ChatInput = ({
                     type="submit"
                     disabled={!message.trim() && !selectedImage}
                     size="sm"
-                    className="h-9 w-9 p-0 absolute right-2 bg-gray-400 rounded-full top-[5px] flex-shrink-0 disabled:opacity-50"
+                    className="h-9 w-9 p-0 absolute right-2 bg-white rounded-full top-[5px] flex-shrink-0 disabled:opacity-20"
                   >
-                    <Send className="w-5 h-5" />
+                    <ArrowUp className="w-5 h-5" />
                   </Button>
                 )}
 
@@ -131,7 +131,7 @@ const ChatInput = ({
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="h-12 w-12 p-0  absolute right-10 text-muted-foreground hover:text-foreground flex-shrink-0"
+                  className="h-12 w-12 p-0 rounded-full absolute right-11 hover:bg-gray-600 text-foreground hover:text-foreground flex-shrink-0"
                 >
                   <Mic className="w-5 h-5" />
                 </Button>

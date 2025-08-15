@@ -1,7 +1,10 @@
-'use client';
 
-import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs';
-import type { Database } from './types';
+import { createBrowserClient } from '@supabase/ssr'
 
-// SSR-safe Supabase client
-export const supabase = createPagesBrowserClient<Database>();
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
+export const supabase= createClient()
