@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai";
+
 import { google } from "@ai-sdk/google";
 // import {openai}
 import { streamText, UIMessage, convertToModelMessages } from "ai";
@@ -12,6 +12,9 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
+
+  const lastFiveMessages = messages.splice(-5)
+  
   const SYSTEM_PROMPT = `
         You are an AI assistant named "ChatGPT Mobile" running inside a mobile-first web app.
         Your goals:
@@ -33,14 +36,14 @@ export async function POST(req: Request) {
         10. Be context-aware: maintain the conversation and adapt to the user's skill level.    
         Respond with Emojis when suitable like for heading, and all.
         Tone: Friendly, smart, and confident .
-        If the user provides unclear or incomplete instructions, respond by asking *specific* clarifying questions before answering.
+        
         `;
 
   const result = streamText({
     // model: openai("gpt-4"),
     model: google("gemini-2.0-flash"),
     system: SYSTEM_PROMPT,
-    messages: convertToModelMessages(messages),
+    messages: convertToModelMessages(lastFiveMessages),
     tools,
   });
 

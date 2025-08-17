@@ -20,16 +20,15 @@ interface UIMessage {
 
 interface ChatAreaProps {
   messages: UIMessage[]; // Use AI SDK's v5 UIMessage type
-  isLoading?: boolean;
+  status : "error" | "submitted" | "streaming" | "ready";
   onToggleSidebar: () => void;
 }
 
-const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
+const ChatArea = ({ messages,status, onToggleSidebar }: ChatAreaProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const {data}=  trpc.test.hello.useQuery()
+  const { data } = trpc.test.hello.useQuery();
 
-  const startingName = data?.message.split(" ")[0]
-  
+  const startingName = data?.message.split(" ")[0];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -37,12 +36,12 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isLoading]);
+  }, [messages]);
 
   return (
     <div className="flex-1 flex flex-col h-screen">
       {/* Header */}
-      <div className="sticky top-0 bg-chat-background/80 backdrop-blur-sm border-chat-border p-[0.60rem] z-10">
+      <div className="sticky top-0 bg-chat-background backdrop-blur-sm border-chat-border p-[0.60rem] z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Button
@@ -54,7 +53,7 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
               <Menu className="w-5 h-5" />
             </Button>
           </div>
-         
+
           <h1 className="text-lg font-normal">ChatGPT</h1>
           <div className="flex space-x-2">
             <div className="hidden sm:block px-3 py-1 bg-primary text-foreground-primary text-sm rounded-full border border-primary/20">
@@ -78,9 +77,10 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
                   height={32}
                 />
               </div>
-            
+
               <h2 className="text-xl font-light mb-2">
-                How can I help you, <span className="text-blue-300">{startingName}</span> ?
+                How can I help you,{" "}
+                <span className="text-blue-300">{startingName}</span> ?
               </h2>
               <p className="text-muted-foreground">
                 Start a conversation or try one of the suggestions below
@@ -90,16 +90,14 @@ const ChatArea = ({ messages, isLoading, onToggleSidebar }: ChatAreaProps) => {
             <>
               {messages.map((message, index) => {
                 const isLatest = index === messages.length - 1;
-
-
-
-                return isLoading && isLatest && message.role == "assistant" ? (
-                  <TypingIndicator key={`typing-${message.id}`} />
-                ) : (
+          
+                return (
                   <ChatMessage
                     key={message.id}
                     message={message}
                     isLatest={isLatest}
+                    status={status}
+                   
                   />
                 );
               })}

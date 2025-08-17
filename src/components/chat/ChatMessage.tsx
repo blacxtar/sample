@@ -1,9 +1,19 @@
 import { useState } from "react";
-import { Copy, ThumbsUp, ThumbsDown, RotateCcw, Check, Loader2 } from "lucide-react";
+import {
+  Copy,
+  ThumbsUp,
+  ThumbsDown,
+  RotateCcw,
+  Check,
+  Loader2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 import { MemoizedMarkdown } from "../MarkDown";
+
+import TypingIndicator from "./TypingIndicator";
+import MarkdownRenderer from "../MarkedDown";
 
 // AI SDK v5 message structure with tool support
 interface UIMessage {
@@ -25,12 +35,14 @@ interface UIMessage {
 interface ChatMessageProps {
   message: UIMessage;
   isLatest?: boolean;
+  status: "error" | "submitted" | "streaming" | "ready";
 }
 
-const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
+const ChatMessage = ({ message, isLatest, status }: ChatMessageProps) => {
   const [copied, setCopied] = useState("");
   const [liked, setLiked] = useState(false);
   const [disLiked, setDisLiked] = useState(false);
+
 
   const getMessageContent = (message: UIMessage): string => {
     return message.parts
@@ -79,15 +91,21 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                 case "text":
                   return (
                     <div key={index}>
+                      {/* <p>{messageContent}</p> */}
                       <MemoizedMarkdown
-                        content={messageContent|| ""}
+                        content={messageContent || ""}
                         id={`${message.id}-${index}`}
                         copiedText={copied}
                         onCopy={handleCopy}
                       />
+                      {/* <MarkdownRenderer
+                        content={messageContent}
+                        copiedText={copied}
+                        onCopy={handleCopy}
+                      /> */}
                     </div>
                   );
-                
+
                 case "image":
                   return (
                     <div key={index} className="mt-3">
@@ -102,27 +120,31 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                 default:
                   // Handle tool parts (like 'tool-generateImage')
                   if (part.type === "tool-generateImage") {
-                    const { state,  input, output } = part;
-                    
+                    const { state, input, output } = part;
+
                     if (state === "input-available") {
                       return (
-                        <div 
+                        <div
                           key={`${message.id}-tool-${index}`}
                           className="mt-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800"
                         >
                           <div className="flex items-center space-x-2">
                             <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
                             <span className="text-sm text-blue-700 dark:text-blue-300">
-                              Generating image: {input?.prompt || 'Creating your image...'}
+                              Generating image:{" "}
+                              {input?.prompt || "Creating your image..."}
                             </span>
                           </div>
                         </div>
                       );
                     }
-                    
+
                     if (state === "output-available" && output?.url) {
                       return (
-                        <div key={`${message.id}-tool-${index}`} className="mt-3">
+                        <div
+                          key={`${message.id}-tool-${index}`}
+                          className="mt-3"
+                        >
                           <div className="mb-2">
                             <span className="text-xs text-muted-foreground">
                               Generated: {input?.prompt}
@@ -146,7 +168,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
 
                     if (state === "error") {
                       return (
-                        <div 
+                        <div
                           key={`${message.id}-tool-${index}`}
                           className="mt-3 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800"
                         >
@@ -161,7 +183,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
 
                     // Fallback for unknown states
                     return (
-                      <div 
+                      <div
                         key={`${message.id}-tool-${index}`}
                         className="mt-2 text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded"
                       >
@@ -183,7 +205,7 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                       </pre>
                     );
                   }
-                  
+
                   return null;
               }
             })}
@@ -199,7 +221,11 @@ const ChatMessage = ({ message, isLatest }: ChatMessageProps) => {
                 copied ? "bg-[#4e4c4c] text-white" : "text-muted-foreground"
               } hover:text-foreground`}
             >
-              {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? (
+                <Check className="w-3.5 h-3.5" />
+              ) : (
+                <Copy className="w-3.5 h-3.5" />
+              )}
             </Button>
 
             <Button

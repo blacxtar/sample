@@ -4,47 +4,66 @@ import { useState } from "react";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatArea from "@/components/chat/ChatArea";
 import ChatInput from "@/components/chat/ChatInput";
-import { useChat } from "@ai-sdk/react";
+import { UIMessage, useChat } from "@ai-sdk/react";
 import { trpc } from "@/utils/trpc";
+import { useRouter } from "next/navigation";
 
-const Chat = () => {
+const Chat = ({
+  id,
+  initialMessages,
+}: { id?: string | undefined; initialMessages?: UIMessage[] } = {}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentChatId, setCurrentChatId] = useState<string>();
   const [isInputLoading, setIsInputLoading] = useState(false);
+  const router = useRouter();
 
-  
+  const { messages, sendMessage, status, stop } = useChat({
+    id,
+    messages: initialMessages,
+  });
 
-  const { messages, sendMessage } = useChat();
+  const creatThread = trpc.threads.create.useMutation({
+    onSuccess: (data) => {
+      router.push(`/chat/${data.id}`);
+    },
+  });
 
-  
+  const renameThread = trpc.threads.rename.useMutation();
+  const createMessage = trpc.messages.create.useMutation({
+    onError: (error) => {
+      console.log("Error while sending text :", error);
+    },
+  });
 
   const handleSendMessage = async (content: string, image?: File) => {
-    // For now, we'll handle text only. Image handling would need additional setup
+    if(id===undefined){
+      creatThread.mutate({title:"New chat..."})
+    }
+    if (messages.length === 2) {
+      const title = content.slice(0, 18);
+      renameThread.mutate({ title: title, id: id });
+    }
+
     setIsInputLoading(true);
     try {
       await sendMessage({ text: content });
+      createMessage.mutate({ threadId: id, content: messages });
     } finally {
       setIsInputLoading(false);
     }
   };
 
   const handleNewChat = () => {
-    setCurrentChatId(undefined);
+    creatThread.mutate({ title: "New chat..." });
     setSidebarOpen(false);
-    // You might want to reset the chat here - the AI SDK doesn't have a built-in reset
-    // You could reload the page or implement custom logic
-    // window.location.reload();
   };
 
   const handleSelectChat = (chatId: string) => {
-    setCurrentChatId(chatId);
+    router.push(`/chat/${chatId}`);
     setSidebarOpen(false);
-    // In a real app, load messages for this chat
   };
 
   const handleStopGeneration = () => {
-    // In v5, there's no direct stop function available from useChat
-    // You might need to implement this differently or check if there's an updated API
+    stop();
     setIsInputLoading(false);
   };
 
@@ -63,17 +82,16 @@ const Chat = () => {
       <ChatSidebar
         isOpen={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
-        currentChatId={currentChatId}
+        currentChatId={id}
         onNewChat={handleNewChat}
         onSelectChat={handleSelectChat}
       />
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        
         <ChatArea
           messages={messages} // Pass AI SDK messages directly
-          isLoading={isLoading}
+          status={status}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         />
 

@@ -10,6 +10,7 @@ interface MarkdownRendererProps {
   content: string;
   copiedText: string | null;
   onCopy: (text: string) => void;
+ 
 }
 
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
@@ -73,14 +74,15 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     },
     ul({ children }: any) {
       return (
-        <ul className="list-disc ml-5 space-y-1 my-3 text-gray-200">
+        <ul className="list-disc ml-5 space-y-3 my-4 text-white">
           {children}
+          
         </ul>
       );
     },
     ol({ children }: any) {
       return (
-        <ol className="list-decimal ml-5 space-y-1 my-3 text-gray-200">
+        <ol className="list-decimal ml-5 space-y-3 my-4 text-white">
           {children}
         </ol>
       );
@@ -95,18 +97,18 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     },
     h2({ children }: any) {
       return (
-        <h2 className="text-xl font-semibold text-white mb-3 mt-3">
+        <h2 className="text-xl font-semibold text-white my-3">
           {children}
         </h2>
       );
     },
     h3({ children }: any) {
       return (
-        <h3 className="text-lg font-medium text-white mb-3 mt-3">{children}</h3>
+        <h3 className="text-lg font-medium text-white my-3">{children}</h3>
       );
     },
     p({ children }: any) {
-      return <p className="leading-relaxed text-gray-200 mb-3">{children}</p>;
+      return <p className="leading-relaxed text-gray-200 my-3">{children}</p>;
     },
     a({ href, children }: any) {
       return (
@@ -120,29 +122,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
         </a>
       );
     },
-    // table({children}: any) {
-    //   return (
-    //     <div className="overflow-x-auto my-4">
-    //       <table className="min-w-full border border-gray-600/30 rounded-lg overflow-hidden">
-    //         {children}
-    //       </table>
-    //     </div>
-    //   );
-    // },
-    // th({children}: any) {
-    //   return (
-    //     <th className="bg-gray-700/50 border border-gray-600/30 px-4 py-2 text-left font-semibold text-white">
-    //       {children}
-    //     </th>
-    //   );
-    // },
-    // td({children}: any) {
-    //   return (
-    //     <td className="border border-gray-600/30 px-4 py-2 text-gray-200">
-    //       {children}
-    //     </td>
-    //   );
-    // },
+   
     table({ children }: { children: React.ReactNode }) {
       return (
         <div className="overflow-x-auto my-4">
@@ -170,7 +150,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
 
   return (
     // <div className="prose prose-invert prose-sm max-w-none">
-    <div className="text-base leading-7 font-light text-white prose prose-invert max-w-none">
+    <div className="text-base leading-7 font-light text-white prose prose-sm prose-invert max-w-none">
       <ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>
     </div>
   );

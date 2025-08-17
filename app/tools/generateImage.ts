@@ -31,7 +31,7 @@ export const generateImage = tool({
         );
         imageUrl = blob.url;
       } else {
-        // 2b. Development: save locally in /public/images
+        
         const fileName = `image-${Date.now()}.png`;
         const filePath = path.join(process.cwd(), "public", "images", fileName);
 

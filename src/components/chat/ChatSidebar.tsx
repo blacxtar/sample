@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
+import { trpc } from "@/utils/trpc";
 
 interface ChatSession {
   id: string;
@@ -80,27 +81,15 @@ const ChatSidebar = ({
   onNewChat,
   onSelectChat,
 }: ChatSidebarProps) => {
-  const [chatSessions] = useState<ChatSession[]>([
-    { id: "1", title: "ChatGPT clone setup", createdAt: "2h ago" },
-    { id: "2", title: "Redis overview and comparison", createdAt: "1d ago" },
-    { id: "3", title: "Build chrome extension", createdAt: "2d ago" },
-    { id: "4", title: "tRPC in Next.js", createdAt: "3d ago" },
-    { id: "5", title: "Improve skills section UI", createdAt: "1w ago" },
-    { id: "6", title: "Setup custom domain", createdAt: "1w ago" },
-    { id: "7", title: "Deploy on Render", createdAt: "1w ago" },
-    { id: "8", title: "Integrate Supabase Auth", createdAt: "2w ago" },
-    { id: "9", title: "Add Markdown support", createdAt: "2w ago" },
-    { id: "10", title: "WebSocket event handling", createdAt: "3w ago" },
-    { id: "11", title: "Optimize image uploads", createdAt: "3w ago" },
-    { id: "12", title: "Build notifications system", createdAt: "1mo ago" },
-    { id: "13", title: "Use Zustand for state", createdAt: "1mo ago" },
-    {
-      id: "14",
-      title: "Migrate from ChromaDB to Pinecone",
-      createdAt: "1mo ago",
-    },
-    { id: "15", title: "Refactor backend APIs", createdAt: "2mo ago" },
-  ]);
+ 
+  const { data: threads, isLoading } = trpc.threads.list.useQuery();
+
+const chatSessions: ChatSession[] =
+  threads?.map(({ id, title, updated_at }) => ({
+    id,
+    title,
+    createdAt: new Date(updated_at).toLocaleString(), // you can format how you like
+  })) ?? [];
 
   return (
     <>
@@ -114,32 +103,32 @@ const ChatSidebar = ({
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-[50%] md:w-[28%] lg:w-[20%] z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full w-[50%] md:w-[29%] lg:w-[19%] z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:relative`}
       >
         <div className="h-screen bg-chat-sidebar flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-2 shrink-0">
+          <div className="flex items-center justify-between px-3 py-2 shrink-0">
             {/* Header content */}
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto">
+              <div className="w-6 h-6 rounded-lg flex items-center justify-center mx-auto">
                 <Image
                   src="/chat-gpt-logo.png"
                   alt="gpt-logo"
                   className="invert-black-to-white"
-                  width={28}
-                  height={28}
+                  width={22}
+                  height={22}
                 />
               </div>
             </div>
             <Button
               variant="ghost"
-              size="sm"
+              size="icon"
               onClick={onToggle}
               className="text-muted-foreground hover:text-foreground"
             >
-              <PanelRight className="w-5 h-5" />
+              <PanelRight className="w-6 h-6" />
             </Button>
           </div>
 
@@ -189,7 +178,7 @@ const ChatSidebar = ({
             {/* Chat History */}
             <div className="px-2">
               {/* Chat History content */}
-              <h3 className="text-sm font-medium text-muted-foreground mb-1">
+              <h3 className="text-sm px-2 font-normal text-muted-foreground mb-2">
                 Chats
               </h3>
               <ScrollArea className="h-full">
@@ -199,11 +188,11 @@ const ChatSidebar = ({
                       key={chat.id}
                       onClick={() => onSelectChat(chat.id)}
                       className={`
-                      w-full text-left p-2 rounded-lg hover:bg-accent transition-colors
-                      ${currentChatId === chat.id ? "bg-accent" : ""}
+                      w-full text-left p-1 py-1 rounded-lg hover:bg-chat-background  transition-colors
+                      ${currentChatId === chat.id ? "bg-chat-background" : ""}
                     `}
                     >
-                      <div className="text-sm font-light text-foreground mb-1 truncate">
+                      <div className="text-sm px-1 font-light text-foreground my-[0.17rem] truncate">
                         {chat.title}
                       </div>
                     </button>
