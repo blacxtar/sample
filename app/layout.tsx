@@ -10,17 +10,9 @@ export const metadata: Metadata = {
   title: 'ChatGPT-AI Chat Assistant',
   description: 'Beautiful mobile-first ChatGPT clone with dark theme, chat bubbles, and smooth animations',
   authors: [{ name: 'Salman Ahmad' }],
-  openGraph: {
-    title: 'ChatGPT Clone',
-    description: 'Beautiful mobile-first ChatGPT clone with dark theme, chat bubbles, and smooth animations',
-    type: 'website',
-    images: ['/chatgpt-logo.jpg'],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@lovable_dev',
-    images: ['/chatgpt-logo.jpg'],
-  },
+  icons:{
+    icon:'/favicon.png'
+  }
 }
 
 export default function RootLayout({

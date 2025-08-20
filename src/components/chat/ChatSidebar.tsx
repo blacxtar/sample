@@ -14,6 +14,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
 import { trpc } from "@/utils/trpc";
+import Link from "next/link";
 
 interface ChatSession {
   id: string;
@@ -184,18 +185,19 @@ const chatSessions: ChatSession[] =
               <ScrollArea className="h-full">
                 <div className="space-y-0">
                   {chatSessions.map((chat) => (
-                    <button
+                    <Link
                       key={chat.id}
+                      href={`/chat/${chat.id}`}
                       onClick={() => onSelectChat(chat.id)}
                       className={`
-                      w-full text-left p-1 py-1 rounded-lg hover:bg-chat-background  transition-colors
+                      w-full block text-left p-1 py-1 rounded-lg hover:bg-chat-background  transition-colors
                       ${currentChatId === chat.id ? "bg-chat-background" : ""}
                     `}
                     >
                       <div className="text-sm px-1 font-light text-foreground my-[0.17rem] truncate">
                         {chat.title}
                       </div>
-                    </button>
+                    </Link>
                   ))}
                 </div>
               </ScrollArea>

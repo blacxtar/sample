@@ -43,7 +43,6 @@ const ChatMessage = ({ message, isLatest, status }: ChatMessageProps) => {
   const [liked, setLiked] = useState(false);
   const [disLiked, setDisLiked] = useState(false);
 
-
   const getMessageContent = (message: UIMessage): string => {
     return message.parts
       .filter((part) => part.type === "text")
@@ -61,20 +60,26 @@ const ChatMessage = ({ message, isLatest, status }: ChatMessageProps) => {
 
   if (message.role === "user") {
     return (
-      <div className="flex justify-end mb-4 animate-fade-in-up">
+      <div className="flex flex-col space-y-1 justify-end mb-4 animate-fade-in-up">
         <div className="chat-bubble-user">
-          <p className="text-sm leading-relaxed">{messageContent}</p>
-          {/* Handle user uploaded images */}
+          {/* Render the image first */}
           {message.parts
-            .filter((part) => part.type === "image")
+            .filter((part) => part.type === "file")
             .map((part, index) => (
               <img
                 key={index}
-                src={part.image}
-                alt="User uploaded image"
-                className="mt-2 rounded-lg max-w-full"
+                src={part.url} // ✅ Corrected: Use part.url
+                alt="User upload"
+                className="mb-2 rounded-lg max-w-xs"
               />
             ))}
+        </div>
+
+        {/* Then, render the text content */}
+        <div className="chat-bubble-user">
+          {messageContent && (
+            <p className="text-sm leading-relaxed">{messageContent}</p>
+          )}
         </div>
       </div>
     );

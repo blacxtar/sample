@@ -8,6 +8,16 @@ import { UIMessage, useChat } from "@ai-sdk/react";
 import { trpc } from "@/utils/trpc";
 import { useRouter } from "next/navigation";
 
+// This helper function converts a File object to a Base64 Data URL
+const convertFileToDataURL = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(file);
+  });
+};
+
 const Chat = ({
   id,
   initialMessages,
@@ -19,8 +29,11 @@ const Chat = ({
   const { messages, sendMessage, status, stop } = useChat({
     id,
     messages: initialMessages,
+    onFinish: ({ message }) => {
+      createMessage.mutate({ threadId: id, content: message });
+    },
   });
-
+  console.log("messages :", messages);
   const creatThread = trpc.threads.create.useMutation({
     onSuccess: (data) => {
       router.push(`/chat/${data.id}`);
@@ -35,8 +48,8 @@ const Chat = ({
   });
 
   const handleSendMessage = async (content: string, image?: File) => {
-    if(id===undefined){
-      creatThread.mutate({title:"New chat..."})
+    if (id === undefined) {
+      creatThread.mutate({ title: "New chat..." });
     }
     if (messages.length === 2) {
       const title = content.slice(0, 18);
@@ -45,8 +58,22 @@ const Chat = ({
 
     setIsInputLoading(true);
     try {
-      await sendMessage({ text: content });
-      createMessage.mutate({ threadId: id, content: messages });
+      if (image) {
+        // 2. Convert the file to a Data URL string.
+        const imageUrl = await convertFileToDataURL(image);
+
+        // 3. Send a structured message with both image and text parts.
+        await sendMessage({
+          role: "user",
+          parts: [
+            { type: "file", mediaType: image.type, url: imageUrl },
+            { type: "text", text: content },
+          ],
+        });
+      } else {
+        // 4. If no image, send a simple text message as before.
+        await sendMessage({ text: content });
+      }
     } finally {
       setIsInputLoading(false);
     }
@@ -58,7 +85,6 @@ const Chat = ({
   };
 
   const handleSelectChat = (chatId: string) => {
-    router.push(`/chat/${chatId}`);
     setSidebarOpen(false);
   };
 

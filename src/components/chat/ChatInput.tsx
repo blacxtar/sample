@@ -15,8 +15,11 @@ const ChatInput = ({
 }: ChatInputProps) => {
   const [message, setMessage] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  console.log("selected Image :", selectedImage);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,27 +57,37 @@ const ChatInput = ({
     const file = e.target.files?.[0];
     if (file) {
       setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const removeImage = () => {
+    setImagePreview(null);
+    setSelectedImage(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
   return (
     <div className="absolute bottom-0  left-0 md:left-[28%] lg:left-[22%] right-0 bg-chat-background  p-2 md:pb-2 pt-0">
       <div className="max-w-4xl mx-auto">
-        {selectedImage && (
-          <div className="mb-2 p-2 bg-chat-ai-bubble rounded-lg">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">
-                Image: {selectedImage.name}
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSelectedImage(null)}
-                className="h-6 w-6 p-0"
-              >
-                ×
-              </Button>
-            </div>
+        {imagePreview && (
+          <div className="mb-2 p-1 bg-gray-700 rounded-lg inline-block relative">
+            <img
+              src={imagePreview}
+              alt="Selected preview"
+              className="w-20 h-20 object-cover rounded-md"
+            />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={removeImage} // We will create this function next
+              className="h-6 w-6 p-0 rounded-full absolute -top-2 -right-2 bg-gray-900 hover:bg-gray-800 text-white"
+            >
+              ×
+            </Button>
           </div>
         )}
 
