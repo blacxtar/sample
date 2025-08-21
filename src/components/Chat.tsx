@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatArea from "@/components/chat/ChatArea";
 import ChatInput from "@/components/chat/ChatInput";
@@ -29,11 +29,18 @@ const Chat = ({
   const { messages, sendMessage, status, stop } = useChat({
     id,
     messages: initialMessages,
-    onFinish: ({ message }) => {
-      createMessage.mutate({ threadId: id, content: message });
+    onFinish: () => {
+      const finalMessages = messageRef.current;
+      console.log("Final Messages :", finalMessages);
+      createMessage.mutate({ threadId: id, content: finalMessages });
     },
   });
-  console.log("messages :", messages);
+  const messageRef = useRef(messages);
+
+  useEffect(() => {
+    messageRef.current = messages;
+  }, [messages]);
+
   const creatThread = trpc.threads.create.useMutation({
     onSuccess: (data) => {
       router.push(`/chat/${data.id}`);

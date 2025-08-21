@@ -58,29 +58,40 @@ const ChatMessage = ({ message, isLatest, status }: ChatMessageProps) => {
     setTimeout(() => setCopied(""), 3000);
   };
 
+  // In ChatMessage.tsx
   if (message.role === "user") {
+    // Check if there is text content
+    const hasText = messageContent.trim() !== "";
+    // Get an array of just the valid image parts
+    const imageParts = message.parts.filter(
+      (part) => part.type === "file" && part.url
+    );
+
     return (
-      <div className="flex flex-col space-y-1 justify-end mb-4 animate-fade-in-up">
-        <div className="chat-bubble-user">
-          {/* Render the image first */}
-          {message.parts
-            .filter((part) => part.type === "file")
-            .map((part, index) => (
+      <div className="flex flex-col items-end space-y-2 mb-4 animate-fade-in-up">
+        {/* 1. Conditionally render the image bubble */}
+        {imageParts.length > 0 && (
+          <div className="chat-bubble-user">
+            {imageParts.map((part, index) => (
               <img
                 key={index}
-                src={part.url} // ✅ Corrected: Use part.url
+                src={part.url}
                 alt="User upload"
-                className="mb-2 rounded-lg max-w-xs"
+                // Add a margin if there's more than one image
+                className={`rounded-lg max-w-xs ${
+                  imageParts.length > 1 ? "mb-2" : ""
+                }`}
               />
             ))}
-        </div>
+          </div>
+        )}
 
-        {/* Then, render the text content */}
-        <div className="chat-bubble-user">
-          {messageContent && (
+        {/* 2. Conditionally render the text bubble */}
+        {hasText && (
+          <div className="chat-bubble-user">
             <p className="text-sm leading-relaxed">{messageContent}</p>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   }

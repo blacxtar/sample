@@ -19,8 +19,6 @@ const ChatInput = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  console.log("selected Image :", selectedImage);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim() || selectedImage) {
@@ -73,7 +71,7 @@ const ChatInput = ({
   return (
     <div className="absolute bottom-0  left-0 md:left-[28%] lg:left-[22%] right-0 bg-chat-background  p-2 md:pb-2 pt-0">
       <div className="max-w-4xl mx-auto">
-        {imagePreview && (
+        {imagePreview && selectedImage && (
           <div className="mb-2 p-1 bg-gray-700 rounded-lg inline-block relative">
             <img
               src={imagePreview}

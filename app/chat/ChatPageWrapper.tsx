@@ -12,7 +12,7 @@ export default function ChatPageWrapper({ id }: { id: string }) {
   });
   if (isFetched) {
     const messages = data?.flatMap((item) => item.content) ?? [];
-    
+    console.log("Messages fetched by db :", messages);
     return (
       <ProtectedRoute>
         <Chat id={id} initialMessages={messages} />
